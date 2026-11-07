@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 540 330" role="img" aria-labelledby="logo-title logo-description">
+  <title id="logo-title">Terviora Estates</title>
+  <desc id="logo-description">Vector reconstruction of the supplied roof and towers emblem, serif Terviora wordmark, and Estates subtitle. Royal blue and sky blue with navy lettering on a transparent background; the green annotation is excluded.</desc>
+  <defs>
+    <path id="letter-t" d="M0 0H56V12H54L52 3H31V58H40V60H16V58H25V3H4L2 12H0Z"/>
+    <path id="letter-e" d="M0 0H49V12H47L45 3H14V28H38V21H40V38H38V31H14V57H46L49 47H51L49 60H0V58H8V2H0Z"/>
+    <path id="letter-r" fill-rule="evenodd" d="M0 0H29C46 0 54 5 54 16C54 25 47 30 36 31L53 56L59 58V60H47L28 32H14V58H22V60H0V58H8V2H0ZM14 3V29H28C41 29 47 25 47 16C47 7 41 3 28 3Z"/>
+    <path id="letter-v" d="M0 0H23V2H15L33 50L51 2H43V0H62V2H55L33 61H30L7 2H0Z"/>
+    <path id="letter-i" d="M0 0H28V2H17V58H28V60H0V58H11V2H0Z"/>
+    <path id="letter-o" fill-rule="evenodd" d="M30-1C48-1 59 11 59 30S48 61 30 61S1 49 1 30S12-1 30-1ZM30 2C16 2 8 13 8 30S16 58 30 58S52 47 52 30S44 2 30 2Z"/>
+    <path id="letter-a" fill-rule="evenodd" d="M30-1H33L57 58H63V60H40V58H49L42 40H17L10 58H19V60H0V58H6ZM29 9L18 37H41Z"/>
+    <path id="small-e" d="M16 0H0V24H16M0 11H13"/>
+    <path id="small-s" d="M16 2C13-1 1-2 0 5C-1 12 16 11 16 18C16 26 4 26 0 22"/>
+    <path id="small-t" d="M0 0H18M9 0V24"/>
+    <path id="small-a" d="M0 24L9 0L18 24M4 15H14"/>
+  </defs>
+  
+  <g id="emblem">
+    <path fill="#2454D8" d="M159 101L270 12L363 78L270 32Z"/>
+    <path fill="#8FD8F2" d="M142 145L176 140H362L382 145Z"/>
+    <path fill="#2454D8" d="M180 102L202 92V140H180Z"/>
+    <path fill="#8FD8F2" d="M215 78L238 66V140H215Z"/>
+    <path fill="#2454D8" fill-rule="evenodd" d="M252 140V63L271 49L290 62V140ZM263 135H278V68L271 62L263 68Z"/>
+    <path fill="#8FD8F2" d="M278 68L282 70V140H278Z"/>
+    <path fill="#2454D8" d="M306 78L330 91V140H306Z"/>
+    <path fill="#8FD8F2" d="M326 89L330 91V140H326Z"/>
+  </g>
+  <g id="wordmark" fill="#08274D" transform="translate(0 174)">
+    <use xlink:href="#letter-t" x="17"/>
+    <use xlink:href="#letter-e" x="83"/>
+    <use xlink:href="#letter-r" x="143"/>
+    <use xlink:href="#letter-v" x="211"/>
+    <use xlink:href="#letter-i" x="283"/>
+    <use xlink:href="#letter-o" x="321"/>
+    <use xlink:href="#letter-r" x="391"/>
+    <use xlink:href="#letter-a" x="459"/>
+  </g>
+  <g id="subtitle" fill="none" stroke="#08274D" stroke-width="2" transform="translate(0 261)">
+    <path d="M28 12H111M429 12H512" stroke-width="1.5"/>
+    <use xlink:href="#small-e" x="141"/>
+    <use xlink:href="#small-s" x="179"/>
+    <use xlink:href="#small-t" x="216"/>
+    <use xlink:href="#small-a" x="253"/>
+    <use xlink:href="#small-t" x="290"/>
+    <use xlink:href="#small-e" x="328"/>
+    <use xlink:href="#small-s" x="366"/>
+  </g>
+</svg>
+

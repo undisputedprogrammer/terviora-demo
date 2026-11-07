@@ -1,0 +1,249 @@
+@font-face{font-family:"Manrope";src:url("../assets/fonts/manrope.woff2") format("woff2");font-style:normal;font-weight:200 800;font-display:swap}
+:root{
+  --canvas:#eff0f3;--surface:#fff;--ink:#111;--muted:#656565;--brand:var(--ink);--brand-hover:#333;--sky:#ddd;--tint:#eee;--navy:var(--ink);--border:#ddd;--control-border:#808080;--on-dark:#fff;--danger:var(--ink);--success:var(--ink);--overlay:rgb(0 0 0 / .48);--photo-label:rgb(0 0 0 / .78);
+  --font-display:"Manrope";--font-body:"Manrope";
+  --s0:0;--s1:4px;--s2:8px;--s3:12px;--s4:16px;--s5:20px;--s6:24px;--s8:32px;--s10:40px;--s12:48px;--s14:56px;--s16:64px;--s20:80px;--s24:96px;--s30:120px;
+  --text-xs:11px;--text-sm:12px;--text-caption:13px;--text-base:14px;--text-body:16px;--text-lg:20px;--text-xl:24px;--text-card:clamp(18px,1.5vw,22px);--text-h2:clamp(32px,3.6vw,50px);--text-hero:clamp(48px,5.75vw,86px);--text-location:clamp(38px,5vw,68px);
+  --leading-tight:1.04;--leading-heading:1.12;--leading-body:1.65;--tracking-display:-.045em;--tracking-heading:-.035em;--tracking-label:.12em;
+  --content:1280px;--wide:1600px;--gutter:64px;--wide-gutter:24px;--section:80px;--header-height:112px;--logo-width:84px;--radius:3px;--rule:1px;--focus:2px;--focus-offset:4px;--icon:20px;--target:44px;
+  --hero-height:540px;--hero-mobile-height:360px;--card-height:300px;--category-height:144px;--process-height:580px;--dialog-width:840px;--info-width:560px;--shadow:0 16px 56px rgb(0 0 0 / .12);
+  --fast:140ms;--standard:220ms;--reveal:420ms;--stagger:60ms;--ease:cubic-bezier(.22,1,.36,1);--ease-state:cubic-bezier(.2,0,0,1);--hover-scale:1.025;
+  --z-nav:10;--z-toast:30;--full:100%;--half:50%;--thin-opacity:.7;
+}
+/* Responsive tokens: mobile < 768px; tablet 768–1099px; desktop >= 1100px. */
+@media(max-width:1099px){:root{--gutter:32px;--section:80px;--hero-height:460px;--header-height:96px;--category-height:160px}}
+@media(max-width:767px){:root{--gutter:20px;--wide-gutter:0px;--section:64px;--header-height:88px;--logo-width:96px;--hero-height:360px;--category-height:170px;--text-hero:clamp(40px,10.7vw,64px)}}
+
+/* Composition measurements drawn from the supplied reference screenshots. */
+:root{--content-ratio:84%;--charcoal:#303332;--tab-background:#ededed;--intro-width:280px;--tab-width:130px;--latest-image-height:180px;--text-process-title:36px;--text-owner-title:42px;--text-compact-title:34px;--plan-width:220px;--owner-photo-height:260px;--owner-back-height:210px;--owner-back-width:66%;--owner-front-width:68%}
+@media(max-width:1099px){:root{--content-ratio:84%;--card-height:210px;--process-height:400px;--category-height:120px;--text-process-title:30px;--text-owner-title:34px;--owner-photo-height:170px;--owner-back-height:145px;--plan-width:160px;--latest-image-height:180px}}
+@media(max-width:767px){:root{--content-ratio:100%;--hero-copy-top:130px;--header-height:88px;--logo-width:84px;--text-hero:clamp(40px,10.8vw,64px);--text-h2:30px;--text-compact-title:28px;--card-height:290px;--process-height:360px;--category-height:150px;--latest-image-height:160px;--plan-width:150px;--owner-photo-height:250px;--owner-back-height:200px;--text-process-title:30px}}
+
+
+:root{--reference-copy:clamp(10px,.95vw,14px);--reference-control:clamp(28px,2.8vw,40px);--reference-gap:clamp(12px,1.4vw,20px);--search-heading-gap:clamp(40px,4.16vw,60px)}
+@media(min-width:768px) and (max-width:1099px){:root{--text-process-title:26px}}
+
+/* The bottom-aligned panorama trims only sky when wider than the hero stage. */
+:root{
+  --hero-stage:max(37vw, clamp(520px,47vw,760px));
+  --hero-copy-top:clamp(108px,9.2vw,136px);
+  --hero-photo-height:50vw;
+  --hero-sky-fade:28%;
+  --hero-copy-width:260px;
+  --hero-muted:#696969;
+  --hero-tracking:-.04em;
+  --hero-leading:.95;
+  --hero-search-overlap:var(--s14);
+  --search-shadow:0 8px 28px rgb(0 0 0 / .10);
+  --text-hero:clamp(42px,4.45vw,64px);
+  --header-height:88px;
+}
+@media(max-width:767px){
+  :root{
+    --hero-copy-top:108px;
+    --hero-sky-fade:20%;
+    --hero-search-overlap:var(--s6);
+    --text-hero:clamp(36px,10vw,44px);
+  }
+}
+
+
+/* One-screen arrival, including the overlapping search. */
+:root{
+  --hero-screen-height:100svh;
+  --hero-photo-height:100%;
+  --hero-photo-position:center 30%;
+  --hero-sky-fade:18%;
+  --hero-search-overlap:80px;
+  --hero-screen-inset:24px;
+  --hero-copy-top:clamp(108px,12svh,144px);
+  --search-radius:8px;
+  --search-shadow:0 12px 40px rgb(0 0 0 / .08);
+  --search-field-height:64px;
+  --search-label-size:10px;
+  --search-tab-width:112px;
+  --search-chev-size:6px;
+  --search-field-wash:#f7f7f7;
+
+}
+@media(max-width:900px){:root{--search-tab-width:96px}}
+@media(max-width:767px){
+  :root{
+    --header-height:64px;
+    --hero-copy-top:96px;
+    --hero-search-overlap:32px;
+    --hero-screen-inset:16px;
+    --hero-photo-height:60%;
+    --hero-photo-position:center bottom;
+    --hero-sky-fade:12%;
+    --search-field-height:60px;
+    --text-hero:clamp(34px,9.6vw,44px);
+  }
+}
+@media(max-width:767px) and (max-height:740px){
+  :root{--hero-copy-top:80px;--text-hero:32px;--hero-photo-height:58%;--search-field-height:52px}
+}
+@media(min-width:768px) and (max-height:800px){
+  :root{--hero-copy-top:96px;--header-height:64px;--text-hero:clamp(38px,4vw,56px);--hero-photo-position:center 12%}
+}
+@media(min-width:1100px) and (min-aspect-ratio:5/3){
+  :root{--hero-wide-zoom:170%;--hero-wide-right:-8%;--hero-wide-bottom:-80px}
+}
+
+/* Full-height photograph with search layered over its lower foreground. */
+:root{
+  --hero-photo-height:100%;
+  --hero-photo-position:center bottom;
+  --hero-expanded-overlap:240px;
+  --logo-width:112px;
+  --footer-logo-width:140px;
+}
+@media(max-width:767px){
+  :root{--logo-width:96px;--hero-expanded-overlap:320px}
+}
+@media(min-width:768px) and (max-width:1099px) and (orientation:portrait){
+  :root{--hero-photo-position:center}
+}
+@media(max-width:767px){
+  :root{--mobile-hero-photo-height:clamp(220px,66vw,360px)}
+}
+
+/* Editorial typography and accessible bespoke choices. */
+:root{
+  --text-hero:clamp(58px,5.6vw,82px);
+  --hero-leading:.98;
+  --hero-tracking:-.025em;
+  --hero-copy-width:310px;
+  --hero-muted:#414641;
+  --hero-copy-top:clamp(120px,12svh,144px);
+  --hero-eyebrow-tracking:.18em;
+  --hero-button-height:48px;
+  --hero-detail-rule:#b5aca0;
+  --choice-max-height:252px;
+  --choice-min-width:176px;
+  --choice-search-min-width:192px;
+  --choice-row-height:32px;
+  --choice-touch-row-height:40px;
+  --choice-shadow:0 12px 36px rgb(20 24 20 / .16);
+  --choice-surface:#fffefa;
+  --choice-active:#efede7;
+  --choice-selected:#e7e4db;
+  --choice-menu-radius:6px;
+  --choice-z:40;
+}
+@media(max-width:767px){
+  :root{--text-hero:clamp(42px,11.3vw,52px);--hero-copy-top:88px;--hero-button-height:44px;--mobile-hero-photo-height:clamp(220px,62vw,340px)}
+}
+@media(max-width:767px) and (max-height:740px){:root{--hero-copy-top:80px;--text-hero:42px}}
+@media(max-width:767px){
+  :root{--mobile-hero-photo-height:clamp(200px,56vw,300px)}
+}
+
+/* Screenshot-matched sans-serif typography, shared by all page text and controls. */
+:root{--hero-tracking:-.04em;--hero-leading:1.04;--text-hero:clamp(48px,5.1vw,74px)}
+@media(max-width:767px){:root{--text-hero:clamp(34px,9.6vw,44px)}}
+
+/* Keep the new sky headroom when a wide screen crops the photograph vertically. */
+@media(min-width:768px) and (orientation:landscape){
+  :root{--hero-photo-position:center 35%}
+}
+
+/* Readability hierarchy for small text, controls, and supporting information. */
+:root{
+  --weight-display:400;
+  --weight-reading:500;
+  --weight-emphasis:600;
+  --muted:#565656;
+}
+
+:root {
+  --canvas: #f7f7f5;
+  --glass-neutral: #333;
+  --glass-option-active: rgb(25 32 29 / .06);
+  --glass-option-selected: rgb(25 32 29 / .10);
+  --glass-option-menu: linear-gradient(145deg, rgb(255 255 255 / .97), rgb(247 247 245 / .89));
+  --glass-option-shadow: 0 2px 8px rgb(17 17 17 / .06), 0 10px 24px rgb(17 17 17 / .09);
+  --glass-light-fill: rgb(255 255 255 / .45);
+  --glass-medium-fill: linear-gradient(135deg, rgb(255 255 255 / .65), rgb(255 255 255 / .35));
+  --glass-dark-fill: rgb(15 15 15 / .35);
+  --glass-light-border: rgb(255 255 255 / .55);
+  --glass-medium-border: rgb(255 255 255 / .6);
+  --glass-dark-border: rgb(255 255 255 / .18);
+  --glass-highlight: inset 0 1px 0 rgb(255 255 255 / .7);
+  --glass-shadow: 0 1px 2px rgb(0 0 0 / .04), 0 12px 40px rgb(0 0 0 / .08);
+  --glass-edge: linear-gradient(135deg, rgb(255 255 255 / .8), transparent 70%);
+  --glass-fallback-light: rgb(255 255 255 / .9);
+  --glass-dark-legible: rgb(15 15 15 / .68);
+  --glass-chip-fill: rgb(255 255 255 / .78);
+  --glass-search-fill: linear-gradient(145deg, rgb(255 255 255 / .50), rgb(255 255 255 / .43));
+  --glass-flyout-fill: linear-gradient(135deg, rgb(255 255 255 / .95), rgb(255 255 255 / .86));
+  --glass-nav-fill: rgb(255 255 255 / .72);
+  --glass-nav-pane: linear-gradient(135deg, rgb(255 255 255 / .8), rgb(255 255 255 / .62));
+  --glass-nav-action: rgb(255 255 255 / .33);
+  --glass-nav-shadow: 0 2px 6px rgb(0 0 0 / .06), 0 12px 30px rgb(0 0 0 / .13);
+  --glass-hairline: rgb(17 17 17 / .16);
+  --glass-field-fill: rgb(255 255 255 / .1);
+  --glass-selection-fill: rgb(255 255 255 / .35);
+  --glass-selection-edge: rgb(255 255 255 / .66);
+  --glass-sheen: rgb(255 255 255 / .22);
+  --glass-caption-fill: linear-gradient(140deg, rgb(255 255 255 / .88), rgb(255 255 255 / .69));
+  --glass-story-fill: linear-gradient(110deg, rgb(255 255 255 / .9) 66%, rgb(255 255 255 / .58));
+  --glass-alert-fill: linear-gradient(120deg, rgb(255 255 255 / .93), rgb(255 255 255 / .76));
+  --glass-ambient: radial-gradient(ellipse, white, transparent 70%);
+  --glass-ambient-size: 600px;
+  --glass-radius: 5px;
+  --glass-radius-small: 3px;
+  --glass-nav-radius: 20px;
+  --glass-search-radius: 18px;
+  --glass-control-radius: 10px;
+  --glass-blur-light: 14px;
+  --glass-blur-medium: 24px;
+  --glass-blur-dark: 20px;
+  --glass-blur-flyout: 30px;
+  --glass-blur-search: 11px;
+  --glass-ease: cubic-bezier(.22, 1, .36, 1);
+  --glass-transition: 350ms;
+  --glass-image-transition: 700ms;
+  --glass-photo-zoom: 1.04;
+  --glass-nav-inset: var(--s6);
+  --glass-nav-offset: var(--s3);
+  --glass-nav-height: var(--s16);
+  --glass-nav-gutter: max(var(--s3), calc((var(--full) - min(var(--content), var(--content-ratio))) / 2 - var(--s5)));
+  --glass-nav-padding: var(--s5);
+  --glass-nav-rest: calc(var(--glass-nav-inset) + (var(--header-height) - var(--glass-nav-height)) / 2);
+  --glass-nav-logo: min(var(--logo-width), var(--s24));
+  --glass-dock-duration: 460ms;
+  --glass-story-overlap: var(--s16);
+  --glass-mobile-search-wash: var(--s30);
+  --glass-input-fill: rgb(255 255 255 / .44);
+  --glass-input-hover: rgb(255 255 255 / .65);
+  --glass-input-focus: rgb(255 255 255 / .83);
+  --glass-input-edge: rgb(17 17 17 / .23);
+  --glass-focus-ring: #666d69;
+  --glass-search-control: rgb(255 255 255 / .17);
+  --glass-search-control-hover: rgb(255 255 255 / .30);
+  --glass-search-control-focus: rgb(255 255 255 / .52);
+  --catalog-title: clamp(34px, 4.1vw, 60px);
+  --catalog-sidebar: clamp(240px, 21vw, 280px);
+  --catalog-nav-clearance: calc(var(--glass-nav-rest) + var(--glass-nav-height) + var(--s8));
+  --detail-photo-max: 420px;
+  --detail-price-size: clamp(25px, 3vw, 40px);
+  --glass-noise: url("../assets/images/glass-noise.svg");
+}
+
+@media (max-width: 767px) {
+  :root {
+    --glass-blur-light: 10px;
+    --glass-blur-medium: 12px;
+    --glass-blur-dark: 10px;
+    --glass-blur-flyout: 14px;
+    --glass-blur-search: 10px;
+    --glass-nav-inset: var(--s2);
+    --glass-nav-offset: var(--s2);
+    --glass-nav-height: var(--s14);
+    --glass-nav-gutter: var(--s2);
+    --glass-nav-padding: var(--s3);
+    --glass-nav-radius: var(--s4);
+    --glass-search-radius: var(--s4);
+  }
+}

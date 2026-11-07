@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en-IN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f7f7f5">
+  <meta name="description" content="Discover a place that feels like home with Terviora. Explore homes, workspaces and land across Kerala.">
+  <title>Terviora Estates — A place to call your own</title>
+  <link rel="icon" href="assets/brand/terviora-logo-on-light.svg" type="image/svg+xml">
+  <link rel="preload" href="assets/fonts/manrope.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="styles/tokens.css">
+  <link rel="stylesheet" href="styles/main.css">
+  <link rel="stylesheet" href="styles/reference.css">
+  <link rel="stylesheet" href="styles/glass.css">
+  <link rel="stylesheet" href="styles/motion.css">
+  <script src="scripts/data.js" defer></script>
+  <script src="scripts/choices.js" defer></script>
+  <script src="scripts/main.js" defer></script>
+  <script src="scripts/glass.js" defer></script>
+  <script src="scripts/motion.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div class="sticky-nav">
+  <div class="nav-glass">
+  <header class="site-header container">
+    <a class="brand brand-logo" href="index.html" aria-label="Terviora home"><img src="assets/brand/terviora-logo-on-light.svg" width="540" height="330" alt="Terviora Estates"></a>
+    <nav class="desktop-nav" aria-label="Main navigation">
+      <a href="listings.html?tab=buy" data-nav-tab="buy">Buy</a><a href="listings.html?tab=rent" data-nav-tab="rent">Rent</a><a href="listings.html?tab=commercial" data-nav-tab="commercial">Commercial</a><a href="listings.html?tab=land" data-nav-tab="land">Land</a><a href="sell.html">Sell</a><a href="contact.html">Contact</a>
+    </nav>
+    <div class="header-actions"><button class="text-button login-action" data-info="login">Login</button><a class="button button-outline post-button glass-light" href="sell.html"><span aria-hidden="true">＋</span> Post property</a><button id="menu-toggle" class="icon-button menu-toggle" aria-expanded="false" aria-controls="mobile-nav" aria-label="Open navigation"><span></span><span></span></button></div>
+  </header>
+  </div>
+  <nav id="mobile-nav" class="mobile-nav glass-medium" aria-label="Mobile navigation" hidden><a href="listings.html?tab=buy" data-nav-tab="buy">Buy a home</a><a href="listings.html?tab=rent" data-nav-tab="rent">Rent a home</a><a href="listings.html?tab=commercial" data-nav-tab="commercial">Commercial</a><a href="listings.html?tab=land" data-nav-tab="land">Plots & land</a><a href="sell.html">Sell your property</a><a href="contact.html">Contact</a><button class="text-button" data-info="login">Login</button></nav>
+  </div>
+  <main id="main">
+    <div class="hero-screen">
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="container hero-heading">
+        <div><p class="hero-eyebrow">DISTINCTIVE HOMES. ROOTED IN KERALA.</p><h1 id="hero-title">Homes for what<br>comes next.</h1><a class="button button-primary hero-cta" href="#search">Explore properties</a></div>
+        <div class="hero-aside"><p>Find homes, workspaces and land across Kerala, with the details that help you decide.</p></div>
+      </div>
+      <figure class="hero-image">
+        <picture>
+          <source media="(max-width: 767px)" srcset="assets/images/hero-landscape-v2-1280.webp 1280w, assets/images/hero-landscape-v2-1672.webp 1672w" sizes="100vw" width="1672" height="941">
+          <source media="(min-width: 768px) and (max-width: 1099px) and (orientation: portrait)" srcset="assets/images/hero-portrait-v2-480.webp 480w, assets/images/hero-portrait-v2-853.webp 853w" sizes="100vw" width="853" height="1844">
+          <img src="assets/images/hero-sky-v3-1280.webp" srcset="assets/images/hero-sky-v3-1280.webp 1280w, assets/images/hero-sky-v3-1672.webp 1672w" sizes="100vw" width="1672" height="941" fetchpriority="high" alt="Modern charcoal Kerala villa with a cantilevered roof and panoramic glazing">
+        </picture>
+      </figure>
+
+    </section>
+
+    <section class="search-section container" aria-labelledby="search-title">
+      <h2 id="search-title" class="sr-only">Search Kerala properties</h2>
+      <div id="search" class="search-shell glass-medium">
+        <div class="search-top"><div class="search-tabs" role="tablist" aria-label="What are you looking for?"><button id="tab-buy" role="tab" aria-selected="true" aria-controls="search-panel" data-tab="buy">Buy</button><button id="tab-rent" role="tab" aria-selected="false" aria-controls="search-panel" tabindex="-1" data-tab="rent">Rent</button><button id="tab-commercial" role="tab" aria-selected="false" aria-controls="search-panel" tabindex="-1" data-tab="commercial">Commercial</button><button id="tab-land" role="tab" aria-selected="false" aria-controls="search-panel" tabindex="-1" data-tab="land">Land</button></div><span class="search-note">A little closer to your kind of place.</span></div>
+        <div id="search-panel" role="tabpanel" aria-labelledby="tab-buy">
+          <form id="property-search">
+            <div class="search-fields">
+              <label class="search-field"><span>LOCATION</span><terviora-choice id="location" name="location" data-searchable aria-label="Location" data-options='[["","Anywhere"],["Kochi","Kochi"],["Thiruvananthapuram","Thiruvananthapuram"],["Kozhikode","Kozhikode"],["Thrissur","Thrissur"]]'></terviora-choice></label>
+              <label class="search-field"><span>PROPERTY TYPE</span><terviora-choice id="property-type" name="type" aria-label="Property type" data-options='[["","All homes"]]'></terviora-choice></label>
+              <fieldset class="search-field budget-field"><legend id="budget-label">BUDGET (₹)</legend><div class="budget-inputs"><input class="glass-input" id="budget-min" inputmode="numeric" aria-label="Minimum budget in rupees" type="number" min="0" step="1" placeholder="₹ Min"><span aria-hidden="true">—</span><input class="glass-input" id="budget-max" inputmode="numeric" aria-label="Maximum budget in rupees" type="number" min="0" step="1" placeholder="₹ Max"></div></fieldset>
+              <label class="search-field size-field"><span>MINIMUM AREA</span><terviora-choice id="quick-area" aria-label="Minimum property area" data-options='[["","All sizes (sq ft)"],["1000","1,000+ sq ft"],["2000","2,000+ sq ft"],["3000","3,000+ sq ft"]]'></terviora-choice></label>
+            </div>
+            <div class="search-bottom"><div class="search-secondary"><label id="commercial-intent-wrap" hidden>Looking to <terviora-choice id="commercial-intent" aria-label="Looking to" data-options='[["sale","Buy"],["rent","Rent"]]'></terviora-choice></label><button class="text-button more-filters" id="filter-toggle" type="button" aria-expanded="false" aria-controls="extra-filters"><span aria-hidden="true">＋</span> More filters</button></div><div class="search-bottom-actions"><button class="text-button subtle" type="reset">Clear filters</button><button class="button button-primary search-submit" type="submit"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></svg>Search properties</button></div></div>
+            <div id="extra-filters" class="extra-filters" hidden><label id="bedrooms-wrap">Bedrooms<terviora-choice id="bedrooms" aria-label="Bedrooms" data-options='[["","Any"],["1","1+"],["2","2+"],["3","3+"],["4","4+"]]'></terviora-choice></label><label>Minimum area (sq ft)<input class="glass-input" id="min-area" inputmode="numeric" type="number" min="0" step="1" placeholder="Any size"></label><label id="furnishing-wrap">Furnishing<terviora-choice id="furnishing" aria-label="Furnishing" data-options='[["","Any"],["furnished","Furnished"],["semi-furnished","Semi-furnished"],["unfurnished","Unfurnished"]]'></terviora-choice></label><label>Listed by<terviora-choice id="posted-by" aria-label="Listed by" data-options='[["","Anyone"],["owner","Owner"],["agent","Agent"]]'></terviora-choice></label></div>
+            <p id="search-message" class="form-message" role="status" hidden></p>
+          </form>
+        </div>
+      </div>
+</section>
+    </div>
+
+
+
+    <section id="featured" class="section section-tinted" aria-labelledby="featured-title"><div class="container"><div class="section-heading"><div><h2 id="featured-title">New properties</h2></div><div class="section-heading-end"><a class="text-link" id="view-all" href="listings.html">Explore all properties <span aria-hidden="true">↗</span></a></div></div><div id="featured-grid" class="property-grid featured-grid"></div><div class="collection-footer"><p>Good spaces deserve a little more attention.</p><a class="text-link" id="view-saved" href="listings.html?view=saved">Your shortlist <span id="saved-count" data-saved-count>0</span> <span aria-hidden="true">↗</span></a></div></div></section>
+    <section id="categories" class="section container" aria-labelledby="categories-title"><div class="section-heading"><div><h2 id="categories-title">Explore by property type</h2></div><p class="section-intro">A city apartment. A garden of your own.<br>Or a blank canvas for something new.</p></div><div id="category-grid" class="category-grid"></div></section>
+
+    <section id="latest" class="section container" aria-labelledby="latest-title"><div class="section-heading"><div><h2 id="latest-title">Just listed.</h2></div><div class="segmented-control" role="group" aria-label="Latest listing type"><button data-latest="sale" aria-pressed="true">Buy</button><button data-latest="rent" aria-pressed="false">Rent</button></div></div><p id="latest-announcement" class="sr-only" role="status"></p><div id="latest-grid" class="latest-grid"></div></section>
+
+    <section id="property-guides" class="section container guide-section" aria-labelledby="guides-title">
+      <div class="guide-story">
+        <h2 id="guides-title">Know what to look for.</h2>
+        <p>Practical checklists to use before you shortlist a property.</p>
+        <figure>
+          <img src="assets/images/modern-interior-640.webp" width="640" height="427" loading="lazy" alt="Contemporary living room with full-height glazing facing a tropical garden">
+          <figcaption class="glass-light">Architectural concept</figcaption>
+        </figure>
+      </div>
+      <div class="guide-list">
+        <details class="guide-item">
+          <summary class="guide-row">
+            <span><small>01 / HOME VIEWINGS</small><span class="guide-title">What to check on a home viewing</span></span>
+            <span class="guide-toggle" aria-hidden="true">＋</span>
+          </summary>
+          <ul class="guide-checklist">
+            <li><strong>Look for signs of damp.</strong> Check ceilings, window frames, and the walls around bathrooms for stains or peeling paint. Ask about past leaks or repairs.</li>
+            <li><strong>Try the everyday essentials.</strong> Open windows and doors, run the taps to check water pressure and drainage, and pause to listen for outside noise.</li>
+            <li><strong>Check how your furniture would fit.</strong> Measure key rooms and doorways. Ask which fixtures, appliances, and parking spaces are included.</li>
+          </ul>
+        </details>
+        <details class="guide-item">
+          <summary class="guide-row">
+            <span><small>02 / NEIGHBOURHOODS</small><span class="guide-title">How to compare two neighbourhoods</span></span>
+            <span class="guide-toggle" aria-hidden="true">＋</span>
+          </summary>
+          <ul class="guide-checklist">
+            <li><strong>Try your usual commute.</strong> Time the door-to-door trip when you would normally travel. Include walking, transfers, and parking.</li>
+            <li><strong>Visit at different times.</strong> Walk the routes you would use on a weekday and again after dark. Notice traffic, noise, street lighting, and footpaths.</li>
+            <li><strong>Compare your weekly essentials.</strong> Check access to groceries, healthcare, schools, or public transport. Note which errands you could do on foot.</li>
+          </ul>
+        </details>
+        <details class="guide-item">
+          <summary class="guide-row">
+            <span><small>03 / COMMERCIAL LEASING</small><span class="guide-title">What to ask before leasing a workspace</span></span>
+            <span class="guide-toggle" aria-hidden="true">＋</span>
+          </summary>
+          <ul class="guide-checklist">
+            <li><strong>What will you pay beyond rent?</strong> Ask for a written breakdown of the deposit, service charges, utilities, parking, and any scheduled rent increases.</li>
+            <li><strong>Can the space support your business?</strong> Ask about permitted use, access hours, internet, signage, and which alterations you can make.</li>
+            <li><strong>What happens if your plans change?</strong> Ask about renewal, early exit, and what you would need to remove or restore before handing back the space.</li>
+          </ul>
+        </details>
+      </div>
+    </section>
+
+    <section id="why-terviora" class="section section-tinted" aria-labelledby="why-title"><div class="container"><div class="section-heading"><div><h2 id="why-title">Clarity at every step.</h2></div><p class="section-intro">A big decision starts<br>with the little things made simpler.</p></div><div class="trust-grid"><article><span class="step-number">01</span><h3>The details that matter</h3><p>Space, price, and location. The essentials, together in one clear view.</p></article><article><span class="step-number">02</span><h3>A search that fits you</h3><p>Start with your place and your priorities. Narrow the search from there.</p></article><article><span class="step-number">03</span><h3>Your favourites, together</h3><p>Save the spaces that speak to you. Come back and take a closer look.</p></article></div></div></section>
+
+    <section id="how-it-works" class="section container" aria-labelledby="how-title"><div class="section-heading"><div><h2 id="how-title">See what we offer<br>and how it works</h2></div><p class="section-intro">Considered spaces, useful details, and a<br>clearer path to your next address.</p></div><div class="process-layout"><div class="process-panel glass-medium"><h3 id="process-title">Property <br>selection</h3><div id="process-content" role="tabpanel" aria-labelledby="step-0"><p id="process-copy">Start with where you want to be. Explore properties by location, budget, and the way you want to live.</p><a id="process-link" href="#search" class="text-link">Start exploring <span aria-hidden="true">↗</span></a></div><div class="process-tabs" role="tablist" aria-label="How it works" aria-orientation="vertical"><button id="step-0" role="tab" aria-selected="true" aria-controls="process-content" data-step="0"><span>01</span> Find your space <span aria-hidden="true">↗</span></button><button id="step-1" role="tab" aria-selected="false" aria-controls="process-content" tabindex="-1" data-step="1"><span>02</span> Shortlist & visit <span aria-hidden="true">↗</span></button><button id="step-2" role="tab" aria-selected="false" aria-controls="process-content" tabindex="-1" data-step="2"><span>03</span> Make your move <span aria-hidden="true">↗</span></button></div></div><figure class="process-photo"><img id="process-image" src="assets/images/modern-villa-1280.webp" width="1280" height="853" loading="lazy" alt="Modern white concrete Kerala villa with cantilevered volumes"><div class="concept-plan glass-light"><img src="assets/brand/concept-plan.svg" width="280" height="180" alt="Illustrative floor plan, not a plan for a listed property"><span>Floor plan illustration</span></div><figcaption id="process-caption" class="sr-only">01 / Imagine the everyday, a little differently.</figcaption></figure></div></section>
+
+    <section id="owners" class="owner-section container" aria-labelledby="owner-title"><div class="owner-copy glass-medium"><h2 id="owner-title">Smart selection<br>of modern real estate</h2><p>Spaces chosen for their architecture, setting, and potential.<br>Find your next address, or help someone discover yours.</p><div class="owner-actions"><a class="button button-primary" href="#featured">Explore properties</a><a class="button button-outline" href="sell.html">List your property</a></div></div><figure><img class="owner-back-image" src="assets/images/modern-villa-640.webp" width="640" height="427" loading="lazy" alt="Contemporary white Kerala villa"><img class="owner-front-image" src="assets/images/modern-interior-1280.webp" width="1280" height="853" loading="lazy" alt="Modern double-height Kerala living room with glass walls"></figure></section>
+
+    <section id="alerts" class="section container alerts-section" aria-labelledby="alerts-title"><div><p class="eyebrow">A LITTLE CLOSER, EVERY DAY</p><h2 id="alerts-title">The right place,<br>when it appears.</h2><p>Be ready for your next chapter.<br>Choose the places you'd like to hear about.</p></div><form id="alerts-form" class="glass-medium"><label for="alert-email">Your email address</label><div class="alert-email-row"><input class="glass-input" id="alert-email" type="email" placeholder="you@example.com" autocomplete="email" required><button class="icon-button" type="submit" aria-label="Request property alerts">↗</button></div><div class="alert-preferences"><label>Location<terviora-choice id="alert-location" required aria-label="Alert location" data-options='[["","Choose a city"],["Kochi","Kochi"],["Thiruvananthapuram","Thiruvananthapuram"],["Kozhikode","Kozhikode"],["Thrissur","Thrissur"]]'></terviora-choice></label><label>I'm looking to<terviora-choice id="alert-intent" aria-label="Alert listing type" data-options='[["Buy","Buy"],["Rent","Rent"]]'></terviora-choice></label></div><p class="sample-note">Email alerts are not active yet. Your details are not sent or stored.</p><p id="alert-message" class="form-message" role="status" hidden></p></form></section>
+
+    <section id="faq" class="section container faq-section" aria-labelledby="faq-title"><div><p class="eyebrow">A FEW THINGS, ANSWERED</p><h2 id="faq-title">Good questions.<br>Clear answers.</h2></div><div class="faq-list"><details><summary>How do I find a property?<span aria-hidden="true">＋</span></summary><p>Choose Buy, Rent, Commercial, or Land. Add a location, property type, and budget, then select Search properties. More filters lets you refine area, bedrooms, furnishing, and who posted it.</p></details><details><summary>Can I save properties for later?<span aria-hidden="true">＋</span></summary><p>Yes. Select the heart on a listing, then open Your shortlist. Favourites are saved in this browser when local storage is available. They are not synced to an account.</p></details><details><summary>Are these properties available to visit?<span aria-hidden="true">＋</span></summary><p>The properties shown are for illustration. Viewings will open when live listings are available.</p></details><details><summary>What does a verified listing mean?<span aria-hidden="true">＋</span></summary><p>Terviora will explain what each verification check covers when verified listings become available.</p></details><details><summary>How can I list my property?<span aria-hidden="true">＋</span></summary><p>Use <a class="text-link" href="sell.html">Sell your property</a> to prepare a listing enquiry. Online posting will open when Terviora starts accepting submissions.</p></details></div></section>
+  </main>
+  <footer class="site-footer"><div class="container"><div class="footer-top"><h2>We help you discover and own<br>the space that feels like yours</h2><a class="text-link" href="#search">Find your place <span aria-hidden="true">↗</span></a></div><div class="footer-columns"><div class="footer-brand"><a class="brand-logo" href="index.html" aria-label="Terviora home"><img src="assets/brand/terviora-logo-on-light.svg" width="540" height="330" alt="Terviora Estates" loading="lazy"></a><p>Homes. Spaces. New beginnings.<br>Rooted in Kerala.</p></div><div><h3>Explore</h3><a href="listings.html?tab=buy" data-nav-tab="buy">Buy a home</a><a href="listings.html?tab=rent" data-nav-tab="rent">Rent a home</a><a href="listings.html?tab=commercial" data-nav-tab="commercial">Commercial</a><a href="listings.html?tab=land" data-nav-tab="land">Plots & land</a></div><div><h3>Find your place</h3><a href="#search" data-city="Kochi">Kochi</a><a href="#search" data-city="Thiruvananthapuram">Thiruvananthapuram</a><a href="#search" data-city="Kozhikode">Kozhikode</a><a href="#search" data-city="Thrissur">Thrissur</a></div><div><h3>Terviora</h3><a href="#why-terviora">Why Terviora</a><a href="#how-it-works">How it works</a><a href="sell.html">List your property</a><a href="#faq">FAQs</a><a id="contact" href="contact.html">Contact</a></div></div><div class="footer-bottom"><p>© <span id="current-year">2026</span> Terviora Estates.</p><p>Properties, prices, and imagery are for illustration.</p><a href="#main">Back to top ↑</a></div></div></footer>
+  <dialog id="info-dialog" class="glass-medium" aria-labelledby="info-title"><button class="dialog-close icon-button" aria-label="Close dialog" data-close>×</button><div class="info-content"><p class="eyebrow">TERVIORA / COMING TOGETHER</p><h2 id="info-title"></h2><p id="info-copy"></p><button class="button button-primary" data-close>Keep exploring <span aria-hidden="true">↗</span></button></div></dialog>
+  <div id="toast" class="toast" role="status" hidden></div>
+  <noscript><p class="noscript-message">Enable JavaScript to search, explore properties, and open details.</p></noscript>
+</body>
+</html>
+
+
+
+
+

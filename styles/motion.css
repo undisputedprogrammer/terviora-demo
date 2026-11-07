@@ -1,0 +1,89 @@
+@keyframes terviora-rise {
+  from { opacity: var(--motion-opacity, .68); translate: 0 var(--motion-offset, var(--s3)); }
+  to { opacity: 1; translate: none; }
+}
+
+@keyframes terviora-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes terviora-fade-out {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+#gallery-image, #photo-dialog-image { position: relative; }
+.motion-photo-out {
+  position: absolute;
+  inset: var(--s0);
+  width: var(--full);
+  height: var(--full);
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  @view-transition { navigation: auto; }
+
+  ::view-transition-group(root) { animation-duration: var(--standard); }
+  ::view-transition-old(root), ::view-transition-new(root) {
+    animation-duration: var(--standard);
+    animation-timing-function: var(--ease-state);
+  }
+
+  .motion-reveal {
+    animation: terviora-rise var(--reveal) var(--ease) calc(var(--motion-step, 0) * var(--stagger)) backwards;
+  }
+
+  :is(.hero-heading .hero-eyebrow, .hero-heading h1, .hero-aside, .hero-cta, .hero-screen .search-shell,
+      .catalog-intro, .catalog-results-bar, .catalog-controls:not(.is-open),
+      .detail-summary, .detail-gallery, .enquiry-intro, .enquiry-form) {
+    animation: terviora-rise var(--reveal) var(--ease) calc(var(--motion-step, 0) * var(--stagger)) backwards;
+  }
+
+  .hero-heading h1, .catalog-results-bar, .catalog-controls { --motion-step: 1; }
+  .hero-aside, .detail-gallery, .enquiry-form { --motion-step: 2; }
+  .hero-cta, .hero-screen .search-shell { --motion-step: 3; }
+
+  .motion-photo-out { animation: terviora-fade-out var(--reveal) var(--ease-state) both; }
+
+  :is(.mobile-nav, .choice-menu, .catalog-controls.is-open, #extra-filters,
+      .form-message, .toast, dialog[open]) {
+    --motion-offset: var(--s2);
+    animation: terviora-rise var(--standard) var(--ease) backwards;
+  }
+
+  dialog[open]::backdrop { animation: terviora-fade-in var(--standard) var(--ease-state); }
+  :is(.motion-reveal, .hero-cta, .search-shell, .enquiry-form, .detail-gallery, .detail-summary,
+      .catalog-results-bar, .catalog-controls, #extra-filters):focus-within {
+    --motion-opacity: 1;
+    --motion-offset: var(--s0);
+  }
+  :is(.guide-item, .faq-list details)[open] > :not(summary) {
+    animation: terviora-fade-in var(--standard) var(--ease-state);
+  }
+
+  @supports (interpolate-size: allow-keywords) and selector(details::details-content) {
+    :is(.guide-item, .faq-list details)::details-content {
+      interpolate-size: allow-keywords;
+      block-size: var(--s0);
+      overflow: clip;
+      transition: block-size var(--standard) var(--ease-state),
+                  content-visibility var(--standard) allow-discrete;
+    }
+
+    :is(.guide-item, .faq-list details)[open]::details-content { block-size: auto; }
+  }
+
+  .favorite .icon { transition: fill var(--fast) var(--ease-state), scale var(--standard) var(--ease); }
+  .favorite:active .icon { scale: .82; }
+  .text-link > span[aria-hidden=true], .hero-cta::after { transition: translate var(--standard) var(--ease); }
+
+  @media (hover: hover) and (pointer: fine) {
+    .text-link:hover > span[aria-hidden=true], .hero-cta:hover::after { translate: var(--s1) 0; }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .motion-photo-out { display: none; }
+}

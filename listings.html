@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en-IN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f7f7f5">
+  <meta name="description" content="Browse properties in Kerala by location, price and property type.">
+  <title>Explore properties | Terviora Estates</title>
+  <link rel="icon" href="assets/brand/terviora-logo-on-light.svg" type="image/svg+xml">
+  <link rel="preload" href="assets/fonts/manrope.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="styles/tokens.css">
+  <link rel="stylesheet" href="styles/main.css">
+  <link rel="stylesheet" href="styles/reference.css">
+  <link rel="stylesheet" href="styles/glass.css">
+  <link rel="stylesheet" href="styles/listings.css">
+  <link rel="stylesheet" href="styles/motion.css">
+  <script src="scripts/data.js" defer></script>
+  <script src="scripts/choices.js" defer></script>
+  <script src="scripts/main.js" defer></script>
+  <script src="scripts/glass.js" defer></script>
+  <script src="scripts/motion.js" defer></script>
+</head>
+<body class="catalog-page">
+<a class="skip-link" href="#main">Skip to content</a>
+  <div class="sticky-nav">
+  <div class="nav-glass">
+  <header class="site-header container">
+    <a class="brand brand-logo" href="index.html" aria-label="Terviora home"><img src="assets/brand/terviora-logo-on-light.svg" width="540" height="330" alt="Terviora Estates"></a>
+    <nav class="desktop-nav" aria-label="Main navigation">
+      <a href="listings.html?tab=buy" data-nav-tab="buy">Buy</a><a href="listings.html?tab=rent" data-nav-tab="rent">Rent</a><a href="listings.html?tab=commercial" data-nav-tab="commercial">Commercial</a><a href="listings.html?tab=land" data-nav-tab="land">Land</a><a href="sell.html">Sell</a><a href="contact.html">Contact</a>
+    </nav>
+    <div class="header-actions"><button class="text-button login-action" data-info="login">Login</button><a class="button button-outline post-button glass-light" href="sell.html"><span aria-hidden="true">＋</span> Post property</a><button id="menu-toggle" class="icon-button menu-toggle" aria-expanded="false" aria-controls="mobile-nav" aria-label="Open navigation"><span></span><span></span></button></div>
+  </header>
+  </div>
+  <nav id="mobile-nav" class="mobile-nav glass-medium" aria-label="Mobile navigation" hidden><a href="listings.html?tab=buy" data-nav-tab="buy">Buy a home</a><a href="listings.html?tab=rent" data-nav-tab="rent">Rent a home</a><a href="listings.html?tab=commercial" data-nav-tab="commercial">Commercial</a><a href="listings.html?tab=land" data-nav-tab="land">Plots & land</a><a href="sell.html">Sell your property</a><a href="contact.html">Contact</a><button class="text-button" data-info="login">Login</button></nav>
+  </div>
+  <main id="main" class="catalog-main">
+    <div class="container catalog-intro">
+      <p class="eyebrow">THE COLLECTION</p>
+      <h1>Explore properties</h1>
+      <p>Find homes, workspaces and land across Kerala.</p>
+    </div>
+    <div class="container catalog-layout">
+      <div class="catalog-results-bar">
+        <div class="catalog-results-meta">
+          <h2 id="results-title" tabindex="-1">All properties</h2>
+          <p id="results-summary" role="status"></p>
+        </div>
+        <button class="button button-outline catalog-toolbar-button" type="button" id="reset-results" hidden>Show all</button>
+        <div class="catalog-results-actions">
+          <button class="button button-outline catalog-toolbar-button catalog-filter-button" type="button" id="catalog-filter-toggle" aria-expanded="false" aria-controls="catalog-filters">
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h8m4 0h4M4 17h4m4 0h8"/><circle cx="14" cy="7" r="2"/><circle cx="10" cy="17" r="2"/></svg>
+            Filters <span id="catalog-filter-count" hidden></span>
+          </button>
+          <form class="catalog-sort" aria-label="Sort properties">
+            <terviora-choice id="results-sort" aria-label="Sort properties" data-options='[["newest","Newest first"],["price-low","Price: low to high"],["price-high","Price: high to low"],["area-high","Largest area"]]'></terviora-choice>
+          </form>
+        </div>
+      </div>
+      <aside class="catalog-controls" id="catalog-filters" aria-labelledby="search-title">
+        <div class="catalog-filter-heading" id="search">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h8m4 0h4M4 17h4m4 0h8"/><circle cx="14" cy="7" r="2"/><circle cx="10" cy="17" r="2"/></svg>
+          <h2 id="search-title">Filter properties</h2>
+        </div>
+        <div class="search-tabs catalog-tabs" role="tablist" aria-label="Listing category">
+          <button id="tab-buy" role="tab" aria-selected="true" aria-controls="search-panel" data-tab="buy">Buy</button>
+          <button id="tab-rent" role="tab" aria-selected="false" aria-controls="search-panel" tabindex="-1" data-tab="rent">Rent</button>
+          <button id="tab-commercial" role="tab" aria-selected="false" aria-controls="search-panel" tabindex="-1" data-tab="commercial">Commercial</button>
+          <button id="tab-land" role="tab" aria-selected="false" aria-controls="search-panel" tabindex="-1" data-tab="land">Land</button>
+        </div>
+        <div id="search-panel" role="tabpanel" aria-labelledby="tab-buy">
+          <form id="property-search" class="catalog-filter-form">
+            <label class="catalog-field" id="commercial-intent-wrap" hidden>
+              <span>Looking to</span>
+              <terviora-choice id="commercial-intent" aria-label="Looking to" data-options='[["sale","Buy"],["rent","Rent"]]'></terviora-choice>
+            </label>
+            <div class="catalog-fields">
+              <label class="catalog-field">
+                <span>Location</span>
+                <terviora-choice id="location" name="location" data-searchable aria-label="Location" data-options='[["","Anywhere"],["Kochi","Kochi"],["Thiruvananthapuram","Thiruvananthapuram"],["Kozhikode","Kozhikode"],["Thrissur","Thrissur"]]'></terviora-choice>
+              </label>
+              <label class="catalog-field">
+                <span>Property type</span>
+                <terviora-choice id="property-type" name="type" aria-label="Property type" data-options='[["","All homes"]]'></terviora-choice>
+              </label>
+              <fieldset class="catalog-field">
+                <legend id="budget-label">Budget (₹)</legend>
+                <div class="catalog-budget">
+                  <input class="glass-input" id="budget-min" inputmode="numeric" aria-label="Minimum budget in rupees" type="number" min="0" step="1" placeholder="Min">
+                  <span aria-hidden="true">to</span>
+                  <input class="glass-input" id="budget-max" inputmode="numeric" aria-label="Maximum budget in rupees" type="number" min="0" step="1" placeholder="Max">
+                </div>
+              </fieldset>
+              <label class="catalog-field">
+                <span>Minimum area</span>
+                <terviora-choice id="quick-area" aria-label="Minimum property area" data-options='[["","All sizes (sq ft)"],["1000","1,000+ sq ft"],["2000","2,000+ sq ft"],["3000","3,000+ sq ft"]]'></terviora-choice>
+              </label>
+            </div>
+            <div class="catalog-advanced">
+              <button class="catalog-advanced-toggle" id="filter-toggle" type="button" aria-expanded="false" aria-controls="extra-filters">
+                More filters <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+              </button>
+              <div id="extra-filters" class="catalog-fields" hidden>
+                <label class="catalog-field" id="bedrooms-wrap">
+                  <span>Bedrooms</span>
+                  <terviora-choice id="bedrooms" aria-label="Bedrooms" data-options='[["","Any"],["1","1+"],["2","2+"],["3","3+"],["4","4+"]]'></terviora-choice>
+                </label>
+                <label class="catalog-field">
+                  <span>Minimum area (sq ft)</span>
+                  <input class="glass-input" aria-label="Minimum area in square feet" inputmode="numeric" type="number" min="0" step="1" id="min-area" placeholder="Any size">
+                </label>
+                <label class="catalog-field" id="furnishing-wrap">
+                  <span>Furnishing</span>
+                  <terviora-choice id="furnishing" aria-label="Furnishing" data-options='[["","Any"],["furnished","Furnished"],["semi-furnished","Semi-furnished"],["unfurnished","Unfurnished"]]'></terviora-choice>
+                </label>
+                <label class="catalog-field">
+                  <span>Listed by</span>
+                  <terviora-choice id="posted-by" aria-label="Listed by" data-options='[["","Anyone"],["owner","Owner"],["agent","Agent"]]'></terviora-choice>
+                </label>
+              </div>
+            </div>
+            <p id="search-message" class="form-message" role="status" hidden></p>
+            <div class="catalog-filter-actions">
+              <button class="button button-primary search-submit" type="submit">
+                <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></svg>
+                Search properties
+              </button>
+              <button class="text-button" type="reset">Clear filters</button>
+            </div>
+          </form>
+        </div>
+      </aside>
+    <section id="search-results" class="catalog-results" aria-labelledby="results-title">
+      <div id="results-grid" class="property-grid results-grid"></div>
+      <div id="no-results" class="empty-state" hidden>
+        <h3>No places match just yet.</h3><p>Try another location or a wider budget.</p>
+        <button class="button button-primary" type="button" id="widen-search">Explore all properties</button>
+      </div>
+    </section>
+    </div>
+  </main>
+<footer class="site-footer"><div class="container"><div class="footer-columns"><div class="footer-brand"><a class="brand-logo" href="index.html" aria-label="Terviora home"><img src="assets/brand/terviora-logo-on-light.svg" width="540" height="330" alt="Terviora Estates" loading="lazy"></a><p>Homes. Spaces. New beginnings.<br>Rooted in Kerala.</p></div><div><h3>Explore</h3><a href="listings.html?tab=buy" data-nav-tab="buy">Buy a home</a><a href="listings.html?tab=rent" data-nav-tab="rent">Rent a home</a><a href="listings.html?tab=commercial" data-nav-tab="commercial">Commercial</a><a href="listings.html?tab=land" data-nav-tab="land">Plots & land</a></div><div><h3>Find your place</h3><a href="listings.html?tab=buy&amp;location=Kochi">Kochi</a><a href="listings.html?tab=buy&amp;location=Thiruvananthapuram">Thiruvananthapuram</a><a href="listings.html?tab=buy&amp;location=Kozhikode">Kozhikode</a><a href="listings.html?tab=buy&amp;location=Thrissur">Thrissur</a></div><div><h3>Terviora</h3><a href="index.html#why-terviora">Why Terviora</a><a href="index.html#how-it-works">How it works</a><a href="sell.html">List your property</a><a href="index.html#faq">FAQs</a><a href="contact.html">Contact</a></div></div><div class="footer-bottom"><p>© <span id="current-year">2026</span> Terviora Estates.</p><p>Properties, prices, and imagery are for illustration.</p><a href="#main">Back to top ↑</a></div></div></footer>
+<dialog id="info-dialog" class="glass-medium" aria-labelledby="info-title"><button class="dialog-close icon-button" aria-label="Close dialog" data-close>×</button><div class="info-content"><p class="eyebrow">TERVIORA / COMING TOGETHER</p><h2 id="info-title"></h2><p id="info-copy"></p><button class="button button-primary" data-close>Keep exploring <span aria-hidden="true">↗</span></button></div></dialog>
+  <div id="toast" class="toast" role="status" hidden></div>
+  <noscript><p class="noscript-message">Enable JavaScript to search, explore properties, and open details.</p></noscript>
+</body>
+</html>

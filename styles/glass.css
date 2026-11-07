@@ -1,0 +1,710 @@
+/* Provide an anchor for the decorative layers on otherwise static surfaces. */
+:where(.glass-light, .glass-medium, .glass-dark):where(:not(dialog)) {
+  position: relative;
+}
+
+.glass-light {
+  --glass-fill: var(--glass-light-fill);
+  --glass-line: var(--glass-light-border);
+  --glass-filter: blur(var(--glass-blur-light)) saturate(160%);
+}
+
+.glass-medium {
+  --glass-fill: var(--glass-medium-fill);
+  --glass-line: var(--glass-medium-border);
+  --glass-filter: blur(var(--glass-blur-medium)) saturate(180%);
+}
+
+.glass-dark {
+  --glass-fill: var(--glass-dark-fill);
+  --glass-line: var(--glass-dark-border);
+  --glass-filter: blur(var(--glass-blur-dark)) saturate(140%);
+  --glass-fallback: var(--glass-dark-legible);
+  color: var(--on-dark);
+}
+
+:is(.glass-light, .glass-medium, .glass-dark) {
+  background: var(--glass-fallback, var(--glass-fallback-light));
+  border: var(--rule) solid var(--glass-line);
+  border-radius: var(--glass-radius);
+  box-shadow: var(--glass-highlight), var(--glass-shadow);
+}
+
+@supports ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  :is(.glass-light, .glass-medium, .glass-dark) {
+    background: var(--glass-fill);
+    -webkit-backdrop-filter: var(--glass-filter);
+    backdrop-filter: var(--glass-filter);
+  }
+}
+
+:is(.glass-light, .glass-medium, .glass-dark)::before,
+:is(.glass-light, .glass-medium, .glass-dark)::after {
+  content: "";
+  position: absolute;
+  inset: var(--s0);
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+@supports (mask-composite: exclude) or (-webkit-mask-composite: xor) {
+  :is(.glass-light, .glass-medium, .glass-dark)::before {
+    padding: var(--rule);
+    background: var(--glass-edge);
+    -webkit-mask: linear-gradient(white 0 0) content-box, linear-gradient(white 0 0);
+    mask: linear-gradient(white 0 0) content-box, linear-gradient(white 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+  }
+}
+
+:is(.glass-light, .glass-medium, .glass-dark)::after {
+  background-image: var(--glass-noise);
+  opacity: .04;
+}
+
+html {
+  scroll-padding-top: calc(var(--header-height) + var(--glass-nav-inset) + var(--s3));
+}
+
+.sticky-nav {
+  position: sticky;
+  top: var(--s0);
+  z-index: var(--z-nav);
+  height: var(--s0);
+}
+
+.nav-glass {
+  position: absolute;
+  inset: var(--s0) var(--glass-nav-gutter) auto;
+  padding-inline: var(--glass-nav-padding);
+  transform: translateY(var(--glass-nav-rest));
+  transition: transform var(--glass-dock-duration) var(--glass-ease);
+}
+
+.nav-glass::before {
+  content: "";
+  position: absolute;
+  inset: var(--s0);
+  pointer-events: none;
+  background: var(--glass-fallback-light);
+  border: var(--rule) solid var(--glass-selection-edge);
+  border-radius: var(--glass-nav-radius);
+  box-shadow: var(--glass-highlight), var(--glass-nav-shadow);
+  opacity: 0;
+  transform: scale(.985);
+  transition: opacity var(--glass-dock-duration) var(--glass-ease),
+    transform var(--glass-dock-duration) var(--glass-ease);
+}
+
+@supports ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .nav-glass::before {
+    background: var(--glass-nav-pane);
+    -webkit-backdrop-filter: blur(var(--glass-blur-light)) saturate(85%);
+    backdrop-filter: blur(var(--glass-blur-light)) saturate(85%);
+  }
+}
+
+.nav-glass .site-header {
+  position: relative;
+  inset: auto;
+  transform: none;
+  width: var(--full);
+  min-height: var(--glass-nav-height);
+}
+
+.nav-glass.is-scrolled {
+  transform: translateY(var(--glass-nav-offset));
+}
+
+.nav-glass.is-scrolled::before {
+  opacity: 1;
+  transform: none;
+}
+
+.nav-glass .brand-logo { width: var(--glass-nav-logo); }
+
+.nav-glass .desktop-nav a,
+.nav-glass .login-action {
+  padding: var(--s2) var(--s3);
+  border-radius: var(--glass-control-radius);
+  transition: background var(--glass-transition) var(--glass-ease);
+}
+
+.nav-glass .desktop-nav a:hover,
+.nav-glass .login-action:hover {
+  background: var(--glass-nav-action);
+  text-decoration: none;
+}
+
+@media (min-width: 901px) {
+  .nav-glass .site-header {
+    display: grid;
+    grid-template-columns: minmax(max-content, 1fr) auto minmax(max-content, 1fr);
+    gap: var(--s2);
+  }
+
+  .nav-glass .desktop-nav { gap: var(--s1); }
+  .nav-glass .header-actions { justify-self: end; gap: var(--s2); }
+}
+
+.sticky-nav .mobile-nav {
+  inset: calc(var(--glass-nav-rest) + var(--glass-nav-height) + var(--s2)) var(--glass-nav-gutter) auto;
+  border-radius: var(--glass-nav-radius);
+  --glass-fill: var(--glass-flyout-fill);
+  max-height: calc(100dvh - var(--header-height) - var(--s6));
+  overflow-y: auto;
+  transition: top var(--glass-dock-duration) var(--glass-ease);
+}
+
+.nav-glass.is-scrolled + .mobile-nav {
+  top: calc(var(--glass-nav-offset) + var(--glass-nav-height) + var(--s2));
+}
+
+.post-button.glass-light {
+  position: relative;
+  --glass-filter: none;
+  --glass-fallback: var(--glass-light-fill);
+  --glass-line: var(--glass-hairline);
+  border-radius: var(--glass-control-radius);
+  box-shadow: var(--glass-highlight);
+  transition: background var(--glass-transition) var(--glass-ease),
+    border-color var(--glass-transition) var(--glass-ease);
+}
+
+.post-button.glass-light:hover {
+  background: var(--glass-nav-fill);
+  border-color: var(--control-border);
+}
+
+.hero-heading::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: var(--s0) auto auto calc(-1 * var(--s16));
+  width: min(var(--glass-ambient-size), var(--full));
+  height: var(--glass-ambient-size);
+  background: var(--glass-ambient);
+  opacity: .5;
+  pointer-events: none;
+}
+
+.hero-screen .search-shell.glass-medium {
+  position: relative;
+  --glass-fill: var(--glass-search-fill);
+  --glass-filter: blur(var(--glass-blur-search)) saturate(82%);
+  --muted: var(--ink);
+  border-color: var(--glass-line);
+  border-radius: var(--glass-search-radius);
+  box-shadow: var(--glass-highlight), var(--glass-shadow);
+}
+
+.hero-screen #search-panel {
+  position: relative;
+  z-index: 1;
+  background: transparent;
+}
+
+.hero-screen .search-top {
+  position: relative;
+  z-index: 1;
+  border: var(--s0);
+  padding-top: var(--s2);
+}
+
+.hero-screen .search-tabs {
+  --tab-index: 0;
+  --tab-size: calc((var(--full) - var(--s2) * 3) / 4);
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(4, var(--search-tab-width));
+  gap: var(--s2);
+  width: fit-content;
+}
+
+.search-tabs:has(#tab-rent[aria-selected=true]) { --tab-index: 1; }
+.search-tabs:has(#tab-commercial[aria-selected=true]) { --tab-index: 2; }
+.search-tabs:has(#tab-land[aria-selected=true]) { --tab-index: 3; }
+
+.hero-screen .search-tabs::before {
+  content: "";
+  position: absolute;
+  inset-block: var(--s0);
+  left: calc(var(--tab-index) * (var(--tab-size) + var(--s2)));
+  width: var(--tab-size);
+  background: var(--glass-selection-fill);
+  border-radius: var(--glass-control-radius);
+  box-shadow: inset 0 0 0 var(--rule) var(--glass-selection-edge);
+  transition: left var(--glass-dock-duration) var(--glass-ease);
+  pointer-events: none;
+}
+
+.hero-screen .search-tabs button {
+  position: relative;
+  border-radius: var(--glass-control-radius);
+  transition: background var(--glass-transition) var(--glass-ease);
+}
+
+.hero-screen .search-tabs button::after {
+  display: none;
+}
+
+.hero-screen .search-tabs button:hover {
+  background: var(--glass-field-fill);
+}
+
+.hero-screen .search-tabs button[aria-selected=true] {
+  background: transparent;
+}
+
+.hero-screen .extra-filters {
+  background: var(--glass-field-fill);
+}
+
+.hero-screen .search-fields {
+  gap: var(--s1);
+  border: var(--s0);
+  border-radius: var(--s0);
+  background: transparent;
+}
+
+.hero-screen .search-field input::placeholder {
+  color: var(--ink);
+  opacity: 1;
+}
+
+.property-body { background: var(--surface); }
+
+.property-body .property-heading {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: baseline;
+  gap: var(--s2);
+}
+
+.listing-identity { min-width: var(--s0); overflow-wrap: anywhere; }
+
+.listing-price {
+  color: var(--ink);
+  font-size: var(--text-base);
+  font-weight: var(--weight-emphasis);
+  font-variant-numeric: tabular-nums;
+  line-height: 1.3;
+  text-align: end;
+  white-space: nowrap;
+}
+
+.latest-card .listing-price { font-size: var(--text-sm); }
+
+.listing-price small {
+  display: block;
+  font-size: var(--text-xs);
+  font-weight: var(--weight-reading);
+  color: var(--muted);
+  letter-spacing: normal;
+}
+
+.property-image .property-tag,
+.property-image .favorite.glass-light,
+.property-view {
+  position: absolute;
+  --glass-filter: none;
+  padding: var(--s1) var(--s2);
+  font-size: var(--text-xs);
+  border-radius: var(--glass-radius-small);
+}
+
+.property-image .property-tag {
+  --glass-fill: var(--glass-chip-fill);
+  top: var(--s2);
+  bottom: auto;
+  left: var(--s2);
+}
+
+.property-image .favorite.glass-light {
+  --glass-fill: var(--glass-chip-fill);
+  background: var(--glass-fallback-light);
+}
+
+@supports ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .property-image .favorite.glass-light {
+    background: var(--glass-fill);
+  }
+}
+
+.property-photo-action { display: block; }
+
+.property-photo-action img {
+  transition: transform var(--glass-image-transition) var(--glass-ease);
+}
+
+.property-view {
+  --glass-fill: var(--glass-chip-fill);
+  bottom: calc(var(--s2) + var(--s8));
+  right: var(--s2);
+  width: max-content;
+  opacity: 0;
+  transform: translateY(var(--s3));
+  transition: opacity var(--glass-transition) var(--glass-ease),
+    transform var(--glass-transition) var(--glass-ease);
+}
+
+.property-photo-action:focus-visible .property-view {
+  opacity: 1;
+  transform: none;
+}
+
+.property-photo-action:focus-visible {
+  outline-offset: calc(-1 * var(--focus-offset));
+}
+
+dialog.glass-medium,
+.choice-menu.glass-medium {
+  --glass-fill: var(--glass-flyout-fill);
+  --glass-filter: blur(var(--glass-blur-flyout)) saturate(180%);
+  --muted: var(--glass-neutral);
+}
+
+.category-card {
+  position: relative;
+  border-radius: var(--glass-radius);
+}
+
+.category-card .image-clip {
+  border-radius: inherit;
+}
+
+.category-caption {
+  position: absolute;
+  inset: auto var(--s2) var(--s2);
+  padding: var(--s2) var(--s3);
+  --glass-fill: var(--glass-caption-fill);
+  --glass-filter: none;
+}
+
+.category-caption .category-meta {
+  padding-top: var(--s0);
+}
+
+.category-caption p {
+  color: var(--glass-neutral);
+}
+
+.guide-story figure {
+  position: relative;
+}
+
+.guide-story figcaption.glass-light {
+  position: absolute;
+  inset: auto var(--s2) var(--s2);
+  --glass-fill: var(--glass-caption-fill);
+  color: var(--glass-neutral);
+  padding: var(--s1) var(--s2);
+}
+
+.process-panel.glass-medium,
+.owner-copy.glass-medium {
+  z-index: 1;
+  --glass-fill: var(--glass-story-fill);
+  --muted: var(--ink);
+}
+
+.concept-plan.glass-light {
+  --glass-fill: var(--glass-caption-fill);
+}
+
+.owner-copy.glass-medium {
+  padding: var(--s4);
+}
+
+#alerts-form.glass-medium {
+  --glass-fill: var(--glass-alert-fill);
+  --muted: var(--glass-neutral);
+  padding: var(--s5);
+  grid-area: 1 / 2;
+}
+
+.alerts-section::before {
+  content: "";
+  grid-area: 1 / 2;
+  align-self: stretch;
+  border-radius: var(--glass-radius);
+  background: url("../assets/images/modern-interior-640.webp") center / cover;
+  filter: grayscale(1);
+}
+
+/* One inset treatment for editable fields and custom choices. */
+form :is(.glass-input, .choice-trigger) {
+  width: var(--full);
+  min-width: var(--s0);
+  min-height: var(--target);
+  padding: var(--s2) var(--s3);
+  background: var(--glass-input-fill);
+  border: var(--rule) solid var(--glass-input-edge);
+  border-radius: var(--glass-control-radius);
+  box-shadow: var(--glass-highlight);
+  color: var(--ink);
+  font: inherit;
+  font-size: var(--text-base);
+  transition: background var(--glass-transition) var(--glass-ease);
+}
+
+form :is(.glass-input, .choice-trigger):hover {
+  background: var(--glass-input-hover);
+}
+
+form :is(.glass-input:focus, .choice-trigger:focus, .choice-trigger[aria-expanded=true]) {
+  background: var(--glass-input-focus);
+}
+
+form :is(.glass-input, .choice-trigger):focus-visible {
+  outline-color: var(--glass-focus-ring);
+  outline-offset: var(--rule);
+}
+
+.glass-input::placeholder { color: var(--muted); opacity: 1; }
+.glass-input[type=number] { appearance: textfield; }
+.glass-input[type=number]::-webkit-inner-spin-button,
+.glass-input[type=number]::-webkit-outer-spin-button { appearance: none; }
+textarea.glass-input { display: block; resize: vertical; }
+
+.choice-menu.glass-medium {
+  --glass-fill: var(--glass-option-menu);
+  --choice-active: var(--glass-option-active);
+  --choice-selected: var(--glass-option-selected);
+  border-radius: var(--glass-control-radius);
+  box-shadow: var(--glass-highlight), var(--glass-option-shadow);
+  font-size: var(--text-caption);
+}
+
+.choice-menu .choice-option {
+  min-height: var(--choice-row-height);
+  padding: var(--s1) var(--s2);
+  gap: var(--s2);
+  border-radius: var(--choice-menu-radius);
+  overflow-wrap: anywhere;
+}
+
+terviora-choice[data-searchable] { --choice-min-width: var(--choice-search-min-width); }
+
+[data-searchable] .choice-menu {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s1);
+  overflow: hidden;
+}
+
+terviora-choice[data-searchable] .choice-menu .choice-search {
+  flex: 0 0 auto;
+  min-height: var(--choice-touch-row-height);
+  padding: var(--s1) var(--s2);
+  background: var(--glass-input-fill);
+  border: var(--rule) solid var(--glass-input-edge);
+  border-radius: var(--choice-menu-radius);
+  font-size: var(--text-body);
+  outline-offset: calc(-1 * var(--rule));
+}
+
+terviora-choice[data-searchable] .choice-menu .choice-search:focus-visible {
+  outline: var(--rule) solid var(--glass-focus-ring);
+  outline-offset: calc(-1 * var(--rule));
+}
+
+@media (pointer: coarse) {
+  .choice-menu .choice-option { min-height: var(--choice-touch-row-height); }
+}
+
+.choice-filtered-list {
+  min-height: var(--s0);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.choice-no-matches {
+  padding: var(--s2);
+  font-size: var(--text-caption);
+}
+
+.hero-screen .search-fields > .search-field {
+  background: var(--glass-search-control);
+  border: var(--rule) solid var(--glass-selection-edge);
+  border-radius: var(--glass-control-radius);
+  box-shadow: var(--glass-highlight);
+  min-width: var(--s0);
+}
+
+.hero-screen .search-fields > .search-field:hover { background: var(--glass-search-control-hover); }
+.hero-screen .search-fields > .search-field:focus-within { background: var(--glass-search-control-focus); }
+
+.hero-screen .search-field :is(.choice-trigger, .glass-input) {
+  background: transparent;
+  box-shadow: none;
+  border: var(--s0);
+  padding: var(--s0);
+  border-radius: var(--glass-radius);
+}
+
+.hero-screen .budget-inputs .glass-input {
+  flex: 1;
+  width: var(--s0);
+}
+
+.hero-screen .search-submit,
+.enquiry-actions .button { border-radius: var(--glass-control-radius); }
+
+#alerts-form .alert-email-row {
+  border: var(--s0);
+  gap: var(--s2);
+}
+
+#alerts-form .alert-email-row > input { padding: var(--s2) var(--s3); }
+#alerts-form .alert-email-row > button { border-radius: var(--glass-control-radius); }
+
+.enquiry-main {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+  grid-template-areas: "intro form" "side form";
+  grid-template-rows: auto 1fr;
+  align-items: start;
+  gap: var(--s6) var(--s12);
+  padding-block: calc(var(--catalog-nav-clearance) + var(--s6)) var(--s16);
+}
+
+.enquiry-page :is(.desktop-nav, .mobile-nav) a[aria-current="page"] {
+  font-weight: var(--weight-emphasis);
+}
+
+.enquiry-intro { grid-area: intro; }
+.enquiry-intro .eyebrow { margin-bottom: var(--s3); }
+.enquiry-intro h1 {
+  font-size: var(--text-hero);
+  line-height: var(--hero-leading);
+  letter-spacing: var(--hero-tracking);
+  text-wrap: balance;
+}
+.enquiry-intro h1 + p { max-width: 36ch; margin-top: var(--s4); text-wrap: balance; }
+.enquiry-related {
+  grid-area: side;
+  padding-top: var(--s4);
+  border-top: var(--rule) solid var(--border);
+  font-size: var(--text-base);
+}
+.enquiry-related .text-link { margin-top: var(--s1); }
+
+.enquiry-form {
+  grid-area: form;
+  min-width: var(--s0);
+  background: var(--surface);
+  border: var(--rule) solid var(--border);
+  padding: var(--s8);
+  border-radius: var(--glass-search-radius);
+}
+
+.enquiry-form h2 { font-size: var(--text-xl); margin-bottom: var(--s5); }
+.enquiry-property { margin-bottom: var(--s4); font-size: var(--text-base); }
+.enquiry-property .text-link { display: inline; overflow-wrap: anywhere; }
+.enquiry-fields { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--s4); }
+.enquiry-fields label { display: grid; align-content: start; gap: var(--s1); font-size: var(--text-sm); font-weight: var(--weight-emphasis); }
+.enquiry-fields :is(.glass-input, .choice-trigger) { font-weight: var(--weight-reading); }
+.enquiry-wide { grid-column: 1 / -1; }
+
+.enquiry-actions { display: grid; justify-items: start; gap: var(--s2); margin-top: var(--s5); }
+.enquiry-actions p { font-size: var(--text-caption); }
+#enquiry-status, #enquiry-copy { margin-top: var(--s3); }
+
+.sell-prep { grid-area: side; }
+.sell-photo { position: relative; margin-bottom: var(--s5); }
+.sell-photo img { width: var(--full); height: var(--owner-photo-height); object-fit: cover; }
+.sell-photo figcaption {
+  position: absolute;
+  inset: auto auto var(--s2) var(--s2);
+  --glass-fill: var(--glass-caption-fill);
+  color: var(--glass-neutral);
+  padding: var(--s1) var(--s2);
+  font-size: var(--text-xs);
+}
+.sell-prep h2 { font-size: var(--text-lg); }
+.sell-prep ul {
+  margin: var(--s2) var(--s0) var(--s0);
+  padding-inline-start: var(--s5);
+  color: var(--muted);
+  font-size: var(--text-base);
+}
+
+@media (min-width: 768px) {
+  .process-photo {
+    margin-inline-start: calc(-1 * (var(--reference-gap) + var(--glass-story-overlap)));
+  }
+
+  .owner-section figure {
+    width: calc(var(--full) + var(--s8) + var(--glass-story-overlap));
+    margin-inline-start: calc(-1 * (var(--s8) + var(--glass-story-overlap)));
+  }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .property-image:hover .property-photo-action img {
+    transform: scale(var(--glass-photo-zoom));
+    will-change: transform;
+  }
+
+  .property-image:hover .property-view {
+    --glass-filter: blur(var(--glass-blur-light)) saturate(160%);
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .hero-screen .search-shell::after {
+    background-image: radial-gradient(circle at var(--x, var(--half)) var(--y, var(--half)), var(--glass-sheen), transparent 45%);
+    opacity: 0;
+    transition: opacity var(--glass-transition) var(--glass-ease);
+  }
+
+  .hero-screen .search-shell.has-sheen::after {
+    opacity: 1;
+  }
+}
+
+@media (max-width: 767px) {
+  .hero-screen .search-top { padding-top: var(--s1); }
+  .hero-screen .search-tabs {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    width: var(--full);
+  }
+  .hero-screen .search-tabs button { padding-inline: var(--s0); }
+  .hero-screen #search-panel { padding-top: var(--s2); }
+  .hero-screen .search-section::before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    inset: calc(-1 * var(--s4)) calc(-1 * var(--gutter)) auto;
+    height: var(--glass-mobile-search-wash);
+    background: url("../assets/images/hero-landscape-v2-1280.webp") center bottom / cover;
+    filter: grayscale(1);
+    opacity: .26;
+    mask-image: linear-gradient(transparent, black 28%, transparent);
+    pointer-events: none;
+  }
+  #alerts-form.glass-medium,
+  .alerts-section::before { grid-area: 2 / 1; }
+  .enquiry-main {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto;
+    grid-template-areas: "intro" "form" "side";
+    gap: var(--s6);
+    padding-block: var(--catalog-nav-clearance) var(--s12);
+  }
+  .enquiry-fields { grid-template-columns: minmax(0, 1fr); }
+  .enquiry-form { padding: var(--s5); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nav-glass, .nav-glass::before, .sticky-nav .mobile-nav, .nav-glass .desktop-nav a, .nav-glass .login-action,
+  .hero-screen .search-tabs::before, .hero-screen .search-tabs button, .post-button.glass-light,
+  form :is(.glass-input, .choice-trigger),
+  .property-view, .property-photo-action img { transition: none; }
+  .property-image:hover .property-photo-action img,
+  .property-image > button:first-child:hover img { transform: none; will-change: auto; }
+}

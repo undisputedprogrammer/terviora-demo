@@ -1,0 +1,33 @@
+{
+  "status": "passed",
+  "fonts": [
+    {
+      "family": "Manrope",
+      "status": "loaded"
+    }
+  ],
+  "viewports": [
+    "1440×1000",
+    "390×844",
+    "320×812",
+    "768×1024"
+  ],
+  "checks": [
+    "Six featured listings and four latest listings",
+    "Local fonts and images",
+    "No horizontal overflow",
+    "Mobile menu",
+    "Landing search and dedicated listing filters",
+    "Commercial intent budget reset",
+    "Budget validation and no-results state",
+    "Sorting and shareable filter URLs",
+    "Cross-page shortlist and enlarged property photo",
+    "Return to the same filtered listings",
+    "Independent latest toggle",
+    "Process tab keyboard navigation",
+    "FAQ",
+    "Alert preview and copyable listing and contact enquiries",
+    "Reduced motion",
+    "No browser errors or failed responses"
+  ]
+}

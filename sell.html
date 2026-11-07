@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en-IN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f7f7f5">
+  <meta name="description" content="Prepare a property listing enquiry with Terviora Estates.">
+  <title>Sell your property | Terviora Estates</title>
+  <link rel="icon" href="assets/brand/terviora-logo-on-light.svg" type="image/svg+xml">
+  <link rel="preload" href="assets/fonts/manrope.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="styles/tokens.css">
+  <link rel="stylesheet" href="styles/main.css">
+  <link rel="stylesheet" href="styles/reference.css">
+  <link rel="stylesheet" href="styles/glass.css">
+  <link rel="stylesheet" href="styles/motion.css">
+  <script src="scripts/data.js" defer></script>
+  <script src="scripts/choices.js" defer></script>
+  <script src="scripts/main.js" defer></script>
+  <script src="scripts/glass.js" defer></script>
+  <script src="scripts/motion.js" defer></script>
+</head>
+<body class="enquiry-page">
+<a class="skip-link" href="#main">Skip to content</a>
+  <div class="sticky-nav">
+  <div class="nav-glass">
+  <header class="site-header container">
+    <a class="brand brand-logo" href="index.html" aria-label="Terviora home"><img src="assets/brand/terviora-logo-on-light.svg" width="540" height="330" alt="Terviora Estates"></a>
+    <nav class="desktop-nav" aria-label="Main navigation">
+      <a href="listings.html?tab=buy" data-nav-tab="buy">Buy</a><a href="listings.html?tab=rent" data-nav-tab="rent">Rent</a><a href="listings.html?tab=commercial" data-nav-tab="commercial">Commercial</a><a href="listings.html?tab=land" data-nav-tab="land">Land</a><a href="sell.html" aria-current="page">Sell</a><a href="contact.html">Contact</a>
+    </nav>
+    <div class="header-actions"><button class="text-button login-action" data-info="login">Login</button><a class="button button-outline post-button glass-light" href="sell.html"><span aria-hidden="true">＋</span> Post property</a><button id="menu-toggle" class="icon-button menu-toggle" aria-expanded="false" aria-controls="mobile-nav" aria-label="Open navigation"><span></span><span></span></button></div>
+  </header>
+  </div>
+  <nav id="mobile-nav" class="mobile-nav glass-medium" aria-label="Mobile navigation" hidden><a href="listings.html?tab=buy" data-nav-tab="buy">Buy a home</a><a href="listings.html?tab=rent" data-nav-tab="rent">Rent a home</a><a href="listings.html?tab=commercial" data-nav-tab="commercial">Commercial</a><a href="listings.html?tab=land" data-nav-tab="land">Plots & land</a><a href="sell.html" aria-current="page">Sell your property</a><a href="contact.html">Contact</a><button class="text-button" data-info="login">Login</button></nav>
+  </div>
+  <main id="main" class="container enquiry-main">
+    <div class="enquiry-intro">
+      <p class="eyebrow">FOR PROPERTY OWNERS</p>
+      <h1>Sell your property.</h1>
+      <p>Tell us what you’re selling and prepare an enquiry with the details that matter.</p>
+    </div>
+    <form id="sell-form" class="enquiry-form" method="post" aria-labelledby="enquiry-title" aria-describedby="enquiry-note">
+      <h2 id="enquiry-title">Listing enquiry</h2>
+      <div class="enquiry-fields">
+        <label>Property type
+          <terviora-choice id="sell-property-type" name="type" aria-label="Property type" required data-options='[["","Choose a property type"]]'></terviora-choice>
+        </label>
+        <label for="sell-location">City or locality
+          <input class="glass-input" id="sell-location" name="location" type="text" maxlength="160" placeholder="e.g. Kakkanad, Kochi" required>
+        </label>
+        <label for="sell-price" class="enquiry-wide">Asking price (₹, optional)
+          <input class="glass-input" id="sell-price" name="price" type="number" inputmode="numeric" min="1" max="9007199254740991" step="1" placeholder="Amount in rupees">
+        </label>
+        <label for="sell-name">Full name
+          <input class="glass-input" id="sell-name" name="name" type="text" autocomplete="name" maxlength="120" placeholder="Your name" required>
+        </label>
+        <label for="sell-email">Email address
+          <input class="glass-input" id="sell-email" name="email" type="email" autocomplete="email" maxlength="254" placeholder="you@example.com" required>
+        </label>
+        <label for="sell-message" class="enquiry-wide">Anything else? (optional)
+          <textarea class="glass-input" id="sell-message" name="message" rows="3" maxlength="2000" placeholder="Share the floor area, condition, or other useful details."></textarea>
+        </label>
+      </div>
+      <div class="enquiry-actions">
+        <button class="button button-primary" type="submit" disabled>Copy listing enquiry <span aria-hidden="true">↗</span></button>
+        <p id="enquiry-note">Online delivery is unavailable. You can copy your draft here.</p>
+      </div>
+      <p id="enquiry-status" class="form-message" role="status" hidden></p>
+      <textarea id="enquiry-copy" class="glass-input" rows="5" aria-label="Listing enquiry draft" readonly hidden></textarea>
+    </form>
+    <section class="sell-prep" aria-labelledby="prep-title">
+      <figure class="sell-photo">
+        <img src="assets/images/modern-villa-640.webp" srcset="assets/images/modern-villa-640.webp 640w, assets/images/modern-villa-1280.webp 1280w" sizes="(max-width: 767px) 90vw, 42vw" width="640" height="427" alt="Contemporary white Kerala villa with a cantilevered upper floor">
+        <figcaption class="glass-light">Architectural concept</figcaption>
+      </figure>
+      <h2 id="prep-title">Before you start</h2>
+      <ul>
+        <li>Note the locality and floor or plot area.</li>
+        <li>Decide on an asking price, if you have one.</li>
+        <li>Keep recent photos handy for when you’re ready to list.</li>
+      </ul>
+    </section>
+  </main>
+<footer class="site-footer"><div class="container"><div class="footer-columns"><div class="footer-brand"><a class="brand-logo" href="index.html" aria-label="Terviora home"><img src="assets/brand/terviora-logo-on-light.svg" width="540" height="330" alt="Terviora Estates" loading="lazy"></a><p>Homes. Spaces. New beginnings.<br>Rooted in Kerala.</p></div><div><h3>Explore</h3><a href="listings.html?tab=buy" data-nav-tab="buy">Buy a home</a><a href="listings.html?tab=rent" data-nav-tab="rent">Rent a home</a><a href="listings.html?tab=commercial" data-nav-tab="commercial">Commercial</a><a href="listings.html?tab=land" data-nav-tab="land">Plots & land</a></div><div><h3>Find your place</h3><a href="listings.html?tab=buy&amp;location=Kochi">Kochi</a><a href="listings.html?tab=buy&amp;location=Thiruvananthapuram">Thiruvananthapuram</a><a href="listings.html?tab=buy&amp;location=Kozhikode">Kozhikode</a><a href="listings.html?tab=buy&amp;location=Thrissur">Thrissur</a></div><div><h3>Terviora</h3><a href="index.html#why-terviora">Why Terviora</a><a href="index.html#how-it-works">How it works</a><a href="sell.html" aria-current="page">List your property</a><a href="index.html#faq">FAQs</a><a href="contact.html">Contact</a></div></div><div class="footer-bottom"><p>© <span id="current-year">2026</span> Terviora Estates.</p><p>Properties, prices, and imagery are for illustration.</p><a href="#main">Back to top ↑</a></div></div></footer>
+<dialog id="info-dialog" class="glass-medium" aria-labelledby="info-title"><button class="dialog-close icon-button" aria-label="Close dialog" data-close>×</button><div class="info-content"><p class="eyebrow">TERVIORA / COMING TOGETHER</p><h2 id="info-title"></h2><p id="info-copy"></p><button class="button button-primary" data-close>Keep exploring <span aria-hidden="true">↗</span></button></div></dialog>
+  <div id="toast" class="toast" role="status" hidden></div>
+  <noscript><p class="noscript-message">Enable JavaScript to prepare and copy your enquiry.</p></noscript>
+</body>
+</html>
