@@ -67,8 +67,8 @@
 
 .catalog-controls .catalog-tabs button:hover { color: var(--ink); }
 .catalog-controls .catalog-tabs button[aria-selected=true] {
-  background: var(--surface);
-  color: var(--ink);
+  background: var(--tint);
+  color: var(--brand);
   border-color: var(--border);
   font-weight: var(--weight-emphasis);
 }

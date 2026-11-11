@@ -75,6 +75,9 @@ html {
 }
 
 .nav-glass {
+  --brand: var(--brand-cyan);
+  --ink: var(--on-dark);
+  color: var(--on-dark);
   position: absolute;
   inset: var(--s0) var(--glass-nav-gutter) auto;
   padding-inline: var(--glass-nav-padding);
@@ -87,14 +90,10 @@ html {
   position: absolute;
   inset: var(--s0);
   pointer-events: none;
-  background: var(--glass-fallback-light);
-  border: var(--rule) solid var(--glass-selection-edge);
+  background: var(--navy);
+  border: var(--rule) solid var(--brand-dark-rule);
   border-radius: var(--glass-nav-radius);
-  box-shadow: var(--glass-highlight), var(--glass-nav-shadow);
-  opacity: 0;
-  transform: scale(.985);
-  transition: opacity var(--glass-dock-duration) var(--glass-ease),
-    transform var(--glass-dock-duration) var(--glass-ease);
+  transition: box-shadow var(--glass-dock-duration) var(--glass-ease);
 }
 
 @supports ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
@@ -118,11 +117,15 @@ html {
 }
 
 .nav-glass.is-scrolled::before {
-  opacity: 1;
-  transform: none;
+  box-shadow: var(--glass-nav-shadow);
 }
 
 .nav-glass .brand-logo { width: var(--glass-nav-logo); }
+.nav-glass .brand-logo img {
+  max-height: calc(var(--glass-nav-height) - var(--s2));
+  object-fit: contain;
+  object-position: left center;
+}
 
 .nav-glass .desktop-nav a,
 .nav-glass .login-action {
@@ -136,6 +139,9 @@ html {
   background: var(--glass-nav-action);
   text-decoration: none;
 }
+
+.nav-glass .desktop-nav a[aria-current="page"] { color: var(--brand-cyan); }
+.mobile-nav a[aria-current="page"] { color: var(--brand); }
 
 @media (min-width: 901px) {
   .nav-glass .site-header {
@@ -164,29 +170,19 @@ html {
 .post-button.glass-light {
   position: relative;
   --glass-filter: none;
-  --glass-fallback: var(--glass-light-fill);
-  --glass-line: var(--glass-hairline);
+  --glass-fill: var(--brand-cyan);
+  --glass-fallback: var(--brand-cyan);
+  --glass-line: var(--brand-cyan);
+  color: var(--navy);
   border-radius: var(--glass-control-radius);
-  box-shadow: var(--glass-highlight);
+  box-shadow: none;
   transition: background var(--glass-transition) var(--glass-ease),
     border-color var(--glass-transition) var(--glass-ease);
 }
 
 .post-button.glass-light:hover {
-  background: var(--glass-nav-fill);
-  border-color: var(--control-border);
-}
-
-.hero-heading::before {
-  content: "";
-  position: absolute;
-  z-index: -1;
-  inset: var(--s0) auto auto calc(-1 * var(--s16));
-  width: min(var(--glass-ambient-size), var(--full));
-  height: var(--glass-ambient-size);
-  background: var(--glass-ambient);
-  opacity: .5;
-  pointer-events: none;
+  background: var(--brand-ice);
+  border-color: var(--brand-ice);
 }
 
 .hero-screen .search-shell.glass-medium {
@@ -675,18 +671,6 @@ terviora-choice[data-searchable] .choice-menu .choice-search:focus-visible {
   }
   .hero-screen .search-tabs button { padding-inline: var(--s0); }
   .hero-screen #search-panel { padding-top: var(--s2); }
-  .hero-screen .search-section::before {
-    content: "";
-    position: absolute;
-    z-index: -1;
-    inset: calc(-1 * var(--s4)) calc(-1 * var(--gutter)) auto;
-    height: var(--glass-mobile-search-wash);
-    background: url("../assets/images/hero-landscape-v2-1280.webp") center bottom / cover;
-    filter: grayscale(1);
-    opacity: .26;
-    mask-image: linear-gradient(transparent, black 28%, transparent);
-    pointer-events: none;
-  }
   #alerts-form.glass-medium,
   .alerts-section::before { grid-area: 2 / 1; }
   .enquiry-main {

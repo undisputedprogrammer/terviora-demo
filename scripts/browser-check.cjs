@@ -15,6 +15,8 @@ const assert = require('node:assert/strict');
     const page = await browser.newPage({viewport:{width:1440,height:1000},deviceScaleFactor:1});
     const errors=[];page.on('pageerror',e=>errors.push(e.message));page.on('response',r=>{if(r.status()>=400)errors.push(`${r.status()} ${r.url()}`);});
     await page.goto('http://127.0.0.1:4173', {waitUntil:'networkidle'});
+    await page.locator('.motion-arrival').waitFor({state:'detached'});
+    await page.waitForFunction(() => [...document.querySelectorAll('.hero-line > span')].every(line => !line.getAnimations().length));
     await page.evaluate(()=>document.fonts.ready);
     assert.equal(await page.locator('#featured-grid .property-card').count(),6);
     assert.equal(await page.locator('#latest-grid .latest-card').count(),4);

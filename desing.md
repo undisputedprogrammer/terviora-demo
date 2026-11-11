@@ -5,15 +5,15 @@ Status: implemented. This revision supersedes the first proposal and follows the
 ## Design Direction
 
 - Concept: the reference website's restrained architectural presentation, adapted to Terviora and contemporary Kerala.
-- The UI uses white, black `#111111`, and greys. The page background `#eff0f3` matches the neutral sky, blended into the closer image framing. A CSS mask blends the upper photo edge into the page.
-- Restore the blue Terviora Estates vector logo in the header and footer. Self-hosted Manrope is used for every heading, paragraph, navigation item, button, input, and custom dropdown. Regular headings, tight tracking, and a restrained scale follow the latest screenshot. The exact source font cannot be established from the raster alone; Manrope is a close visual match.
-- The navigation, hero copy and search share a centered grid capped at 1280 px. On desktop and tablet, the hero and photo span the full initial screen and search overlays the lower foreground. Phones use a shorter hero followed by a separate search panel.
+- The supplied logo artwork sets the palette. Navy `#001743` anchors the navigation, trust section and footer. Blue `#0355C1` marks primary actions, cyan `#47DEFD` highlights navigation and secondary accents, and silver `#F7F7F9` provides contrast on navy. Pale blue surfaces frame the architectural photography.
+- The transparent SVG lockup traces the supplied architectural mark and both lines of the Terviora Estates name. Manrope continues across page text and controls, with regular headings and tight tracking.
+- The navigation, hero copy and search share a centered grid capped at 1280 px. On desktop and tablet, the hero video spans the full initial screen under a black overlay, with search layered over the lower foreground. Phones use a shorter hero followed by a separate search panel.
 - Interaction: custom styled comboboxes throughout the page, functional search and filters, local shortlist, detail dialogs, process selector with restrained image transition, and native FAQ disclosures. Respect reduced motion.
 - Authorization: the user explicitly requested this rework. No new approval is needed to carry out the stated reference match.
 
 ## Reference mapping
 
-1. **151502 — hero:** compact navigation, original black two-line headline left, small supporting copy right, a solid high-contrast Explore properties button, and a full-width modern Kerala villa photo. The headline sits against the open sky.
+1. **151502 — hero:** compact navigation, two-line headline left, small supporting copy right, a solid high-contrast Explore properties button, and a full-width video with a black overlay behind the headline.
 2. **151539 — search and inventory:** quiet underlined tabs, visible field labels, and four fields separated by fine dividers in one pale surface. The white panel overlaps the hero and leads into equal white listing cards. The hero action scrolls to the search tabs.
 3. **151607 — process:** narrow white text panel at left, much larger modern house image at right, short selector labels at the bottom of the panel, and a small illustrative floor-plan card over the image. The floor plan is labeled as a concept, not a listing's actual plan.
 4. **151644 — owner/footer:** white owner CTA with left-aligned headline and compact actions; two overlapping images on the right. Follow with restrained footer typography and plain navigation. Do not copy unsupported review scores or contact details.
@@ -23,7 +23,7 @@ The screenshots guide composition and proportions. Text length, Terviora brandin
 
 ## Architecture and photography
 
-Use the current `assets/images/modern-*.webp` set for listing imagery. The hero uses new `hero-landscape-v2-*` and `hero-portrait-v2-*` images composed for full-screen backgrounds and an overlaid search panel. Prompts and provenance are in `assets/images/HERO-FULLSCREEN-PROMPTS.md`. The built-in image-generation tool produced these concepts:
+Use the current `assets/images/modern-*.webp` set for listing imagery. The hero uses the supplied `assets/videos/hero-section-video.mp4` with a poster frame from the clip. Prompts and provenance are in `assets/images/HERO-FULLSCREEN-PROMPTS.md`. The built-in image-generation tool produced these concepts:
 
 - `modern-hero`: charcoal cantilevered villa, panoramic glazing, slim bronze fascia, and clean sky for the headline.
 - `hero-landscape-v2` and `hero-portrait-v2`: coordinated modern villa compositions with pale sky for copy and continuous foreground behind search. The older panorama remains archived and is no longer used in the page.
@@ -72,7 +72,7 @@ Run `npm start` for the local preview and `npm run check` for static checks. Bro
 
 ## Current reference typography refinement
 
-The hero uses the reference-inspired sans-serif scale, a small tracked eyebrow, stronger supporting-copy contrast, and a solid dark action with a clear arrow. The blue logo and coordinated Kerala imagery remain. UI surfaces stay white and neutral, with a quiet warm tint for active dropdown options. New palette, sizing, and motion values live in the token layer.
+The hero uses the reference-inspired sans-serif scale, a small tracked eyebrow, and a solid blue action with a clear arrow. The coordinated Kerala imagery sits against cool, light surfaces. Selected filters and dropdown options use pale blue and cyan tints. Palette, sizing, and motion values live in the token layer.
 
 All nine dropdowns use the same custom choice control, including advanced filters and property alerts. Options open above or below the trigger according to available space. Arrow keys, Home/End, Enter/Space, typeahead, Escape, Tab, and outside dismissal are supported. No HTML select elements remain.
 
