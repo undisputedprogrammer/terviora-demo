@@ -11,54 +11,8 @@
     });
   }
 
-  function playArrival() {
-    const brand = document.querySelector('.site-header .brand-logo img');
-    const visit = performance.getEntriesByType('navigation')[0];
-    if (!brand || reducedMotion.matches || location.hash || window.scrollY || document.hidden ||
-        document.activeElement !== document.body || (visit && visit.type !== 'navigate')) return;
-
-    try {
-      if (sessionStorage.getItem('terviora-arrived')) return;
-      sessionStorage.setItem('terviora-arrived', '1');
-    } catch {
-      // Keep the opener on the landing page when session storage is unavailable.
-      if (!document.querySelector('.hero-screen')) return;
-    }
-
-    const arrival = document.createElement('div');
-    arrival.className = 'motion-arrival';
-    arrival.setAttribute('aria-hidden', 'true');
-    arrival.innerHTML = '<div class="motion-arrival-mark"><div class="motion-arrival-frame"></div><span class="motion-arrival-rule"></span></div>';
-    const logo = brand.cloneNode();
-    logo.alt = '';
-    arrival.querySelector('.motion-arrival-frame').append(logo);
-
-    const listeners = new AbortController();
-    function finish(interrupted = false) {
-      listeners.abort();
-      clearTimeout(deadline);
-      arrival.remove();
-      if (interrupted) root.classList.remove('motion-opening');
-    }
-
-    const deadline = setTimeout(() => finish(), 1500);
-    const options = { signal: listeners.signal };
-    arrival.addEventListener('animationend', event => {
-      if (event.animationName === 'terviora-curtain-top') finish();
-    }, options);
-    for (const event of ['keydown', 'pointerdown']) {
-      window.addEventListener(event, () => finish(true), { ...options, capture: true });
-    }
-    window.addEventListener('pagehide', () => finish(true), options);
-    reducedMotion.addEventListener('change', () => finish(true), options);
-    root.classList.add('motion-opening');
-    document.body.prepend(arrival);
-  }
-
   function installPointerMotion() {
     const finePointer = matchMedia('(hover: hover) and (pointer: fine) and (forced-colors: none)');
-    const hero = document.querySelector('.hero-screen');
-    const media = hero?.querySelector('.hero-media');
     const pointer = document.createElement('div');
     pointer.className = 'motion-pointer';
     pointer.setAttribute('aria-hidden', 'true');
@@ -70,7 +24,6 @@
       cancelAnimationFrame(frame);
       frame = 0;
       pointer.classList.remove('is-visible');
-      hero?.classList.remove('is-tracking');
     };
 
     function draw() {
@@ -80,23 +33,10 @@
         reset();
         return;
       }
-      const hasPointer = !target.closest('input, textarea, [contenteditable], [role="combobox"], dialog, .choice-menu');
+      const hasPointer = !target.closest('.hero-screen, input, textarea, [contenteditable], [role="combobox"], dialog, .choice-menu');
       pointer.style.transform = `translate3d(${x}px, ${y}px, 0)`;
       pointer.classList.toggle('is-visible', hasPointer);
       pointer.classList.toggle('is-action', Boolean(target.closest('a[href], button:not(:disabled), summary')));
-
-      if (!media) return;
-      const tracking = hero.contains(target);
-      hero.classList.toggle('is-tracking', tracking);
-      if (!tracking) return;
-      const rect = media.getBoundingClientRect();
-      if (!rect.width || !rect.height) return;
-      const lightX = Math.min(rect.width, Math.max(0, x - rect.left));
-      const lightY = Math.min(rect.height, Math.max(0, y - rect.top));
-      media.style.setProperty('--hero-light-x', `${lightX}px`);
-      media.style.setProperty('--hero-light-y', `${lightY}px`);
-      media.style.setProperty('--hero-depth-x', lightX / rect.width - .5);
-      media.style.setProperty('--hero-depth-y', lightY / rect.height - .5);
     }
 
     window.addEventListener('pointermove', event => {
@@ -106,7 +46,7 @@
     }, { passive: true });
     window.addEventListener('pointerout', event => { if (!event.relatedTarget) reset(); });
     window.addEventListener('blur', reset);
-    window.addEventListener('scroll', () => hero?.classList.remove('is-tracking'), { passive: true });
+    window.addEventListener('scroll', reset, { passive: true });
     window.addEventListener('keydown', reset);
     finePointer.addEventListener('change', reset);
     reducedMotion.addEventListener('change', reset);
@@ -115,27 +55,14 @@
   function installHeroVideo() {
     const video = document.querySelector('#hero-video');
     if (!video) return;
-    const toggle = document.querySelector('.hero-video-toggle');
-    let pausedByVisitor = false;
     const play = () => video.play().catch(() => {});
-    const updateLabel = () => { toggle.textContent = video.paused ? 'Play video' : 'Pause video'; };
-    video.addEventListener('play', updateLabel);
-    video.addEventListener('pause', updateLabel);
-    video.addEventListener('error', () => { toggle.hidden = true; });
-    toggle.addEventListener('click', () => {
-      pausedByVisitor = !video.paused;
-      if (pausedByVisitor) video.pause();
-      else play();
-    });
     reducedMotion.addEventListener('change', () => {
       if (reducedMotion.matches) video.pause();
-      else if (!pausedByVisitor) play();
+      else play();
     });
-    toggle.hidden = false;
     if (!reducedMotion.matches) play();
   }
 
-  playArrival();
   root.classList.add('motion-ready');
   installHeroVideo();
   installPointerMotion();

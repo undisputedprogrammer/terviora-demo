@@ -12,7 +12,7 @@ npm start
 
 Open http://127.0.0.1:4173. `PORT` may override the default. The preview server binds to loopback only. Stop with Ctrl+C.
 
-The site also works on ordinary static hosting. Deploy `index.html`, `listings.html`, `property.html`, `sell.html`, `contact.html`, `styles/`, `assets/`, and the browser scripts `data.js`, `choices.js`, `main.js`, `glass.js`, and `motion.js` from `scripts/`. Developer utilities and QA files need not be deployed.
+The site also works on ordinary static hosting. Deploy `index.html`, `listings.html`, `property.html`, `sell.html`, `contact.html`, `styles/`, `assets/`, and the browser scripts `data.js`, `choices.js`, `main.js`, `glass.js`, `arrival.js`, and `motion.js` from `scripts/`. Developer utilities and QA files need not be deployed.
 
 ## Included
 
@@ -27,7 +27,7 @@ The site also works on ordinary static hosting. Deploy `index.html`, `listings.h
 - The supplied Terviora Estates mark and name are traced in `assets/brand/terviora-estates-lockup.svg`. The website palette comes from the same artwork.
 - Design tokens, keyboard focus, accessible native dialogs, reduced-motion handling, and responsive layouts down to 320 px.
 - Shared motion for page entrances, scroll reveals, listings updates, disclosures, and decoded gallery images. Same-origin page crossfades run where browser support is available. Reduced-motion preferences skip the animations.
-- A branded opening sequence plays once per tab when visitors enter the site. The hero reveals its title and video in stages. On devices with a mouse, the pointer and light follow movement, and the video shifts gently beneath them.
+- A branded opening sequence plays on direct visits and reloads. The hero reveals its title and video in stages. On devices with a mouse, the animated cursor ring appears outside the hero and its search panel.
 
 ## Honest frontend boundaries
 
@@ -44,7 +44,7 @@ Replace sample inventory and imagery with approved real data before launch. Conf
 - `styles/listings.css`: compact listings and property detail layouts.
 - `scripts/data.js`: clearly marked sample inventory with separate `listing_type` and `property_type` fields.
 - `scripts/main.js`: application interactions.
-- `styles/motion.css` and `scripts/motion.js`: the opening sequence, hero and pointer effects, scroll progress, and one-time reveals for section content and listing cards.
+- `scripts/arrival.js` starts the branded opening sequence before page content. `styles/motion.css` and `scripts/motion.js` handle animation styles, hero playback, the cursor ring, scroll progress, and one-time reveals for section content and listing cards.
 - `scripts/choices.js`: styled custom choice controls; keyboard navigation, typeahead, reset, and validation without HTML selects.
 - `assets/images/MODERN-PROMPTS.md`: current image prompts and provenance; `PROVENANCE.md` records the superseded first image set.
 - `assets/images/GALLERY-PROMPTS.md`: references and generation prompts for the alternate gallery views.
@@ -75,13 +75,13 @@ Seven modern concepts were generated with the built-in image tool, then optimize
 The current revision follows the supplied screenshots closely: full-screen modern villa hero with search over its lower foreground, equal three-column white listing cards, narrow process text panel with a large image, and a white owner banner. Seven new modern architectural concepts replace the initial traditional-looking imagery.
 
 
-On desktop and tablet, the hero and its video fill `100svh` with search layered over the bottom. Below 768 px, a compact hero is followed by a separate search panel with a 16 px gap. The supplied MP4 plays muted and loops under a black overlay. Visitors can pause playback, and reduced-motion mode starts with a still frame from the video. Advanced filters and validation errors expand naturally. To capture and verify the opening composition at seven desktop/mobile sizes with the same Playwright environment settings, run `node scripts/check-hero.cjs` while the local preview is running.
+On desktop and tablet, the hero and its video fill `100svh` with search layered over the bottom. Below 768 px, a compact hero is followed by a separate search panel with a 16 px gap. The supplied MP4 plays muted and loops under a black overlay. Reduced-motion mode shows a still frame from the video. Advanced filters and validation errors expand naturally. To capture and verify the opening composition at seven desktop/mobile sizes with the same Playwright environment settings, run `node scripts/check-hero.cjs` while the local preview is running.
 
 Custom dropdown checks run with `node scripts/check-choices.cjs` using the same Playwright settings. They cover keyboard selection/dismissal, pointer selection, viewport placement, form reset, dynamic property types, area synchronization, required alert choices, and unique runtime IDs. `scripts/check-hero.cjs` also verifies visible supporting copy and a contrasting usable hero action across seven viewport sizes.
 
 ### Glass surfaces
 
-- `glass-light` styles the Post property button, listing controls, and category captions. The navy navbar keeps the silver and cyan logo readable as it docks after 40 px of scroll.
+- `glass-light` styles the Post property button, listing controls, and category captions. The navbar spans the top at rest and becomes a floating, translucent navy bar with backdrop blur after 40 px of scroll.
 - `glass-medium` styles search, the mobile menu, dialogs, dropdowns, and selected content panels. Search uses a light frost and transparent fields so the photo shows through. Dialogs and dropdowns use stronger blur.
 - `glass-dark` is available for dark overlays where white text needs contrast. Listing prices sit on the right, opposite the property name.
 

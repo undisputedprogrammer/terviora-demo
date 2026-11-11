@@ -28,7 +28,7 @@
 
 @keyframes terviora-arrival-mark {
   0% { opacity: 0; scale: .94; clip-path: inset(38% 0 38% 0); }
-  45%, 73% { opacity: 1; scale: 1; clip-path: inset(0); }
+  30%, 80% { opacity: 1; scale: 1; clip-path: inset(0); }
   100% { opacity: 0; scale: 1.04; clip-path: inset(0); }
 }
 
@@ -259,10 +259,10 @@
 
   .favorite .icon { transition: fill var(--fast) var(--ease-state), scale var(--standard) var(--ease); }
   .favorite:active .icon { scale: .82; }
-  .text-link > span[aria-hidden=true], .hero-cta::after { transition: translate var(--standard) var(--ease); }
+  .text-link > span[aria-hidden=true] { transition: translate var(--standard) var(--ease); }
 
   @supports (animation-timeline: scroll()) {
-    .nav-glass::after {
+    .nav-glass.is-scrolled::after {
       content: "";
       position: absolute;
       inset: auto var(--glass-nav-padding) var(--s0);
@@ -276,7 +276,7 @@
   }
 
   @media (hover: hover) and (pointer: fine) and (forced-colors: none) {
-    .text-link:hover > span[aria-hidden=true], .hero-cta:hover::after { translate: var(--s1) 0; }
+    .text-link:hover > span[aria-hidden=true] { translate: var(--s1) 0; }
 
     .motion-ready body { cursor: url("../assets/brand/terviora-pointer.svg") 2.4 2.4, auto; }
     .motion-ready :is(a[href], button:not(:disabled), summary):not(dialog *, .choice-menu *, [role="combobox"]) {
@@ -284,30 +284,6 @@
     }
     .motion-ready :is(input, textarea, [contenteditable]) { cursor: text; }
     .motion-ready :is(dialog, .choice-menu) { cursor: auto; }
-
-    .hero-video-layer {
-      transition: translate var(--motion-follow) var(--ease), scale var(--motion-follow) var(--ease);
-    }
-
-    .hero-screen.is-tracking .hero-video-layer {
-      translate: calc(var(--hero-depth-x, 0) * var(--s6)) calc(var(--hero-depth-y, 0) * var(--s4));
-      scale: 1.06;
-    }
-
-    .hero-media::after {
-      content: "";
-      position: absolute;
-      inset: var(--s0) auto auto var(--s0);
-      width: var(--motion-lens-size);
-      aspect-ratio: 1;
-      background: radial-gradient(circle, var(--motion-lens-fill), transparent 68%);
-      pointer-events: none;
-      opacity: 0;
-      transform: translate3d(var(--hero-light-x, 0), var(--hero-light-y, 0), 0) translate(-50%, -50%);
-      transition: transform var(--motion-follow) var(--ease), opacity var(--standard) var(--ease-state);
-    }
-
-    .hero-screen.is-tracking .hero-media::after { opacity: 1; }
 
     .motion-pointer.is-visible {
       display: block;

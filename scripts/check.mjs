@@ -2,7 +2,7 @@ import { readFile, access } from 'node:fs/promises';
 import { spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 const root = new URL('../', import.meta.url);
-for (const file of ['scripts/main.js','scripts/choices.js','scripts/data.js','scripts/glass.js','scripts/motion.js','scripts/serve.mjs']) {
+for (const file of ['scripts/main.js','scripts/choices.js','scripts/data.js','scripts/glass.js','scripts/motion.js','scripts/arrival.js','scripts/serve.mjs']) {
   const result = spawnSync(process.execPath,['--check',fileURLToPath(new URL(file,root))],{encoding:'utf8'});
   if(result.status!==0)throw new Error(result.stderr);
 }

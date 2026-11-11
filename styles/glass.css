@@ -79,10 +79,13 @@ html {
   --ink: var(--on-dark);
   color: var(--on-dark);
   position: absolute;
-  inset: var(--s0) var(--glass-nav-gutter) auto;
-  padding-inline: var(--glass-nav-padding);
-  transform: translateY(var(--glass-nav-rest));
-  transition: transform var(--glass-dock-duration) var(--glass-ease);
+  inset: var(--s0) var(--s0) auto;
+  padding-block: calc(var(--glass-nav-rest) / 2);
+  padding-inline: calc(var(--glass-nav-gutter) + var(--glass-nav-padding));
+  transition: inset-inline-start var(--glass-dock-duration) var(--glass-ease),
+    inset-inline-end var(--glass-dock-duration) var(--glass-ease),
+    padding var(--glass-dock-duration) var(--glass-ease),
+    transform var(--glass-dock-duration) var(--glass-ease);
 }
 
 .nav-glass::before {
@@ -90,18 +93,27 @@ html {
   position: absolute;
   inset: var(--s0);
   pointer-events: none;
-  background: var(--navy);
-  border: var(--rule) solid var(--brand-dark-rule);
-  border-radius: var(--glass-nav-radius);
-  transition: box-shadow var(--glass-dock-duration) var(--glass-ease);
+  background-color: var(--navy);
+  border: var(--rule) solid transparent;
+  transition: background-color var(--glass-dock-duration) var(--glass-ease),
+    border-radius var(--glass-dock-duration) var(--glass-ease),
+    box-shadow var(--glass-dock-duration) var(--glass-ease),
+    opacity var(--glass-dock-duration) var(--glass-ease);
 }
 
 @supports ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
-  .nav-glass::before {
-    background: var(--glass-nav-pane);
-    -webkit-backdrop-filter: blur(var(--glass-blur-light)) saturate(85%);
-    backdrop-filter: blur(var(--glass-blur-light)) saturate(85%);
+  .nav-glass.is-scrolled::before {
+    background-color: var(--glass-nav-pane);
+    -webkit-backdrop-filter: blur(var(--glass-blur-light)) saturate(125%);
+    backdrop-filter: blur(var(--glass-blur-light)) saturate(125%);
   }
+}
+
+@media (min-width: 768px) {
+  body:has(.hero-screen) .nav-glass:not(.is-scrolled) {
+    padding-block: var(--glass-nav-rest) var(--s0);
+  }
+  body:has(.hero-screen) .nav-glass:not(.is-scrolled)::before { opacity: 0; }
 }
 
 .nav-glass .site-header {
@@ -113,10 +125,15 @@ html {
 }
 
 .nav-glass.is-scrolled {
+  inset-inline: var(--glass-nav-gutter);
+  padding-block: var(--s0);
+  padding-inline: var(--glass-nav-padding);
   transform: translateY(var(--glass-nav-offset));
 }
 
 .nav-glass.is-scrolled::before {
+  border-color: var(--brand-dark-rule);
+  border-radius: var(--glass-nav-radius);
   box-shadow: var(--glass-nav-shadow);
 }
 
@@ -648,18 +665,6 @@ terviora-choice[data-searchable] .choice-menu .choice-search:focus-visible {
     --glass-filter: blur(var(--glass-blur-light)) saturate(160%);
     opacity: 1;
     transform: none;
-  }
-}
-
-@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
-  .hero-screen .search-shell::after {
-    background-image: radial-gradient(circle at var(--x, var(--half)) var(--y, var(--half)), var(--glass-sheen), transparent 45%);
-    opacity: 0;
-    transition: opacity var(--glass-transition) var(--glass-ease);
-  }
-
-  .hero-screen .search-shell.has-sheen::after {
-    opacity: 1;
   }
 }
 

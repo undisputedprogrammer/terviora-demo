@@ -41,24 +41,9 @@ h1,h2,h3{font-weight:400;letter-spacing:var(--tracking-heading)}
 .hero-video-layer{position:relative;width:var(--full);height:var(--full)}
 .hero-media video{display:block;width:var(--full);height:var(--full);object-fit:cover}
 .hero-video-layer::after{content:"";position:absolute;inset:var(--s0);background:var(--hero-video-scrim);pointer-events:none}
-.hero-video-toggle{
-  position:absolute;
-  z-index:2;
-  inset:auto var(--gutter) var(--s3) auto;
-  background:var(--hero-video-control-fill);
-  color:var(--on-dark);
-  border:var(--rule) solid var(--glass-dark-border);
-  border-radius:var(--glass-control-radius);
-}
-.hero-video-toggle:hover{background:var(--hero-video-control-hover)}
-.hero-video-toggle:focus-visible{outline-color:var(--on-dark)}
 @media(min-width:768px){
   .hero{background:var(--navy);color:var(--on-dark)}
   .hero-heading{--hero-muted:var(--on-dark)}
-  .hero-video-toggle{
-    inset-block:calc(var(--hero-copy-top) + var(--s30)) auto;
-    inset-inline-end:max(var(--gutter), calc((var(--full) - min(var(--content-ratio), var(--content))) / 2));
-  }
 }
 @media(max-width:767px){
   .hero-video-layer::after{background:var(--hero-video-scrim-mobile)}
