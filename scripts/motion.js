@@ -33,7 +33,7 @@
         reset();
         return;
       }
-      const hasPointer = !target.closest('.hero-screen, input, textarea, [contenteditable], [role="combobox"], dialog, .choice-menu');
+      const hasPointer = !target.closest('.hero-screen, .search-section, input, textarea, [contenteditable], [role="combobox"], dialog, .choice-menu');
       pointer.style.transform = `translate3d(${x}px, ${y}px, 0)`;
       pointer.classList.toggle('is-visible', hasPointer);
       pointer.classList.toggle('is-action', Boolean(target.closest('a[href], button:not(:disabled), summary')));
@@ -52,19 +52,72 @@
     reducedMotion.addEventListener('change', reset);
   }
 
-  function installHeroVideo() {
+  function installHeroScrubbing() {
     const video = document.querySelector('#hero-video');
     if (!video) return;
-    const play = () => video.play().catch(() => {});
-    reducedMotion.addEventListener('change', () => {
-      if (reducedMotion.matches) video.pause();
-      else play();
+
+    const hero = video.closest('.hero');
+    const stage = hero.parentElement;
+    const phone = matchMedia('(max-width: 767px)');
+    let animationFrame = 0;
+
+    function render() {
+      animationFrame = 0;
+      if (!stage.classList.contains('is-scrubbable')) return;
+      const bounds = stage.getBoundingClientRect();
+      // On phones the shot scrolls away while the camera advances.
+      const travel = phone.matches ? bounds.height * .75 : bounds.height - hero.offsetHeight;
+      if (travel <= 0) return;
+      const progress = Math.max(0, Math.min(1, -bounds.top / travel));
+      const copyProgress = Math.min(1, progress / (phone.matches ? .7 : .45));
+      hero.style.setProperty('--cinema-copy-progress', copyProgress);
+      hero.classList.toggle('hero-copy-faded', copyProgress === 1);
+
+      if (!Number.isFinite(video.duration) || !video.seekable.length || video.seeking) return;
+      const time = Math.min(video.duration - 1 / 30, progress * video.duration);
+      if (Math.abs(video.currentTime - time) >= 1 / 60) video.currentTime = time;
+    }
+
+    function scheduleRender() {
+      if (!animationFrame) animationFrame = requestAnimationFrame(render);
+    }
+
+    function stop() {
+      stage.classList.remove('is-scrubbable');
+      video.classList.remove('has-frame');
+      hero.classList.remove('hero-copy-faded');
+      hero.style.removeProperty('--cinema-copy-progress');
+    }
+
+    function syncPreference() {
+      if (reducedMotion.matches) {
+        stop();
+        video.removeAttribute('src');
+        video.load();
+        return;
+      }
+      stage.classList.add('is-scrubbable');
+      video.preload = 'auto';
+      video.src = phone.matches ? video.dataset.mobileSrc : video.dataset.src;
+      scheduleRender();
+    }
+
+    video.addEventListener('loadeddata', () => {
+      if (!reducedMotion.matches) video.classList.add('has-frame');
+      scheduleRender();
     });
-    if (!reducedMotion.matches) play();
+    for (const event of ['seeked', 'progress', 'canplay']) {
+      video.addEventListener(event, scheduleRender);
+    }
+    video.addEventListener('error', stop);
+    window.addEventListener('scroll', scheduleRender, { passive: true });
+    window.addEventListener('resize', scheduleRender);
+    reducedMotion.addEventListener('change', syncPreference);
+    syncPreference();
   }
 
   root.classList.add('motion-ready');
-  installHeroVideo();
+  installHeroScrubbing();
   installPointerMotion();
 
   if (!window.IntersectionObserver) return;

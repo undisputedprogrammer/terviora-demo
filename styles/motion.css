@@ -32,10 +32,10 @@
   100% { opacity: 0; scale: 1.04; clip-path: inset(0); }
 }
 
-@keyframes terviora-scan {
-  0% { opacity: 0; scale: .45 1; translate: 0 var(--s12); }
-  26% { opacity: .72; }
-  100% { opacity: 0; scale: 1 1; translate: 0 calc(-1 * var(--s20)); }
+@keyframes terviora-arrival-sweep {
+  0% { opacity: 0; translate: -100% 0; }
+  22%, 78% { opacity: 1; }
+  100% { opacity: 0; translate: 200% 0; }
 }
 
 @keyframes terviora-fade-in {
@@ -145,6 +145,59 @@
     animation: terviora-rule var(--motion-arrival-hold) var(--ease-state) both;
   }
 
+  .motion-opening:has(.home-page) { --motion-opening-delay: var(--cinema-intro-hold); }
+  .motion-arrival-home {
+    background: var(--navy);
+    color: var(--on-dark);
+    animation: terviora-fade-out var(--cinema-intro-fade) var(--ease-state) var(--cinema-intro-hold) both;
+  }
+  .motion-arrival-home::before, .motion-arrival-home::after { content: none; }
+  .home-page:has(.motion-arrival-home) .sticky-nav { z-index: calc(var(--motion-overlay-layer) + 1); }
+  .motion-arrival-brand {
+    display: grid;
+    justify-items: center;
+    gap: var(--s1);
+    text-align: center;
+  }
+  .motion-arrival-brand > * {
+    --motion-opacity: 0;
+    animation: terviora-rise var(--reveal) var(--ease) backwards;
+  }
+  .motion-arrival-brand img {
+    width: var(--s16);
+    margin-block-end: var(--s4);
+    border: var(--rule) solid var(--brand-dark-rule);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+  }
+  .motion-arrival-name {
+    font-size: var(--text-lg);
+    letter-spacing: var(--hero-eyebrow-tracking);
+    animation-delay: calc(3 * var(--stagger));
+  }
+  .motion-arrival-caption {
+    color: var(--brand-ice);
+    font-size: var(--text-xs);
+    letter-spacing: var(--hero-eyebrow-tracking);
+    animation-delay: calc(5 * var(--stagger));
+  }
+  .motion-arrival-track {
+    position: absolute;
+    inset-block-end: var(--s14);
+    width: var(--s30);
+    height: var(--rule);
+    overflow: clip;
+    background: var(--brand-dark-rule);
+  }
+  .motion-arrival-track::after {
+    content: "";
+    display: block;
+    width: var(--half);
+    height: var(--full);
+    background: var(--brand-ice);
+    animation: terviora-arrival-sweep var(--cinema-intro-hold) linear both;
+  }
+
   .motion-reveal {
     --motion-delay: calc(var(--motion-step, 0) * var(--motion-section-stagger));
     animation: terviora-rise var(--motion-section-enter) var(--ease) var(--motion-delay) backwards;
@@ -182,7 +235,7 @@
     animation: terviora-rule var(--motion-section-enter) var(--ease) var(--motion-delay) both;
   }
 
-  .motion-ready :is(.hero-heading .hero-eyebrow, .hero-aside, .hero-cta, .hero-screen .search-shell,
+  .motion-ready :is(.hero-eyebrow, .hero-description, .hero-cta,
       .catalog-intro, .catalog-results-bar, .catalog-controls:not(.is-open),
       .detail-summary, .detail-gallery, .enquiry-intro, .enquiry-form) {
     animation: terviora-rise var(--motion-section-enter) var(--ease)
@@ -191,17 +244,8 @@
 
   .catalog-results-bar, .catalog-controls, .hero-line:first-child { --motion-step: 1; }
   .detail-gallery, .enquiry-form, .hero-line:last-child { --motion-step: 2; }
-  .hero-aside { --motion-step: 3; }
+  .hero-description { --motion-step: 3; }
   .hero-cta { --motion-step: 4; }
-  .hero-screen .search-shell { --motion-step: 5; }
-
-  .motion-ready .hero-screen .search-fields > .search-field {
-    animation: terviora-rise var(--reveal) var(--ease)
-      calc(var(--motion-opening-delay, 0ms) + (var(--motion-step, 5) + var(--motion-field, 1)) * var(--stagger)) backwards;
-  }
-  .hero-screen .search-field:nth-child(2) { --motion-field: 2; }
-  .hero-screen .search-field:nth-child(3) { --motion-field: 3; }
-  .hero-screen .search-field:nth-child(4) { --motion-field: 4; }
 
   .motion-ready .hero-line { overflow: clip; overflow-clip-margin: var(--s2); }
   .motion-ready .hero-line > span {
@@ -210,20 +254,11 @@
       calc(var(--motion-opening-delay, 0ms) + var(--motion-step) * var(--stagger)) backwards;
   }
 
-  .motion-ready .hero-media video {
-    animation: terviora-lens-in var(--motion-hero-enter) var(--ease) var(--motion-opening-delay, 0ms) backwards;
+  .is-scrubbable .hero-heading:not(:focus-within) {
+    opacity: calc(1 - var(--cinema-copy-progress, 0));
+    translate: 0 calc(-1 * var(--cinema-lift) * var(--cinema-copy-progress, 0));
   }
-
-  .motion-ready .hero-media::before {
-    content: "";
-    position: absolute;
-    z-index: 1;
-    inset: auto var(--s0) 33%;
-    height: var(--rule);
-    background: linear-gradient(90deg, transparent, var(--brand-ice), transparent);
-    pointer-events: none;
-    animation: terviora-scan var(--motion-hero-enter) var(--ease) var(--motion-opening-delay, 0ms) both;
-  }
+  .hero-copy-faded .hero-cta:not(:focus) { pointer-events: none; }
 
   .motion-photo-out { animation: terviora-fade-out var(--reveal) var(--ease-state) both; }
 

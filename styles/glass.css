@@ -110,10 +110,10 @@ html {
 }
 
 @media (min-width: 768px) {
-  body:has(.hero-screen) .nav-glass:not(.is-scrolled) {
+  .home-page .nav-glass:not(.is-scrolled) {
     padding-block: var(--glass-nav-rest) var(--s0);
   }
-  body:has(.hero-screen) .nav-glass:not(.is-scrolled)::before { opacity: 0; }
+  .home-page .nav-glass:not(.is-scrolled)::before { opacity: 0; }
 }
 
 .nav-glass .site-header {
@@ -202,7 +202,7 @@ html {
   border-color: var(--brand-ice);
 }
 
-.hero-screen .search-shell.glass-medium {
+.search-section .search-shell.glass-medium {
   position: relative;
   --glass-fill: var(--glass-search-fill);
   --glass-filter: blur(var(--glass-blur-search)) saturate(82%);
@@ -212,20 +212,20 @@ html {
   box-shadow: var(--glass-highlight), var(--glass-shadow);
 }
 
-.hero-screen #search-panel {
+.search-section #search-panel {
   position: relative;
   z-index: 1;
   background: transparent;
 }
 
-.hero-screen .search-top {
+.search-section .search-top {
   position: relative;
   z-index: 1;
   border: var(--s0);
   padding-top: var(--s2);
 }
 
-.hero-screen .search-tabs {
+.search-section .search-tabs {
   --tab-index: 0;
   --tab-size: calc((var(--full) - var(--s2) * 3) / 4);
   position: relative;
@@ -239,7 +239,7 @@ html {
 .search-tabs:has(#tab-commercial[aria-selected=true]) { --tab-index: 2; }
 .search-tabs:has(#tab-land[aria-selected=true]) { --tab-index: 3; }
 
-.hero-screen .search-tabs::before {
+.search-section .search-tabs::before {
   content: "";
   position: absolute;
   inset-block: var(--s0);
@@ -252,36 +252,36 @@ html {
   pointer-events: none;
 }
 
-.hero-screen .search-tabs button {
+.search-section .search-tabs button {
   position: relative;
   border-radius: var(--glass-control-radius);
   transition: background var(--glass-transition) var(--glass-ease);
 }
 
-.hero-screen .search-tabs button::after {
+.search-section .search-tabs button::after {
   display: none;
 }
 
-.hero-screen .search-tabs button:hover {
+.search-section .search-tabs button:hover {
   background: var(--glass-field-fill);
 }
 
-.hero-screen .search-tabs button[aria-selected=true] {
+.search-section .search-tabs button[aria-selected=true] {
   background: transparent;
 }
 
-.hero-screen .extra-filters {
+.search-section .extra-filters {
   background: var(--glass-field-fill);
 }
 
-.hero-screen .search-fields {
+.search-section .search-fields {
   gap: var(--s1);
   border: var(--s0);
   border-radius: var(--s0);
   background: transparent;
 }
 
-.hero-screen .search-field input::placeholder {
+.search-section .search-field input::placeholder {
   color: var(--ink);
   opacity: 1;
 }
@@ -538,7 +538,7 @@ terviora-choice[data-searchable] .choice-menu .choice-search:focus-visible {
   font-size: var(--text-caption);
 }
 
-.hero-screen .search-fields > .search-field {
+.search-section .search-fields > .search-field {
   background: var(--glass-search-control);
   border: var(--rule) solid var(--glass-selection-edge);
   border-radius: var(--glass-control-radius);
@@ -546,10 +546,10 @@ terviora-choice[data-searchable] .choice-menu .choice-search:focus-visible {
   min-width: var(--s0);
 }
 
-.hero-screen .search-fields > .search-field:hover { background: var(--glass-search-control-hover); }
-.hero-screen .search-fields > .search-field:focus-within { background: var(--glass-search-control-focus); }
+.search-section .search-fields > .search-field:hover { background: var(--glass-search-control-hover); }
+.search-section .search-fields > .search-field:focus-within { background: var(--glass-search-control-focus); }
 
-.hero-screen .search-field :is(.choice-trigger, .glass-input) {
+.search-section .search-field :is(.choice-trigger, .glass-input) {
   background: transparent;
   box-shadow: none;
   border: var(--s0);
@@ -557,12 +557,12 @@ terviora-choice[data-searchable] .choice-menu .choice-search:focus-visible {
   border-radius: var(--glass-radius);
 }
 
-.hero-screen .budget-inputs .glass-input {
+.search-section .budget-inputs .glass-input {
   flex: 1;
   width: var(--s0);
 }
 
-.hero-screen .search-submit,
+.search-section .search-submit,
 .enquiry-actions .button { border-radius: var(--glass-control-radius); }
 
 #alerts-form .alert-email-row {
@@ -669,13 +669,13 @@ terviora-choice[data-searchable] .choice-menu .choice-search:focus-visible {
 }
 
 @media (max-width: 767px) {
-  .hero-screen .search-top { padding-top: var(--s1); }
-  .hero-screen .search-tabs {
+  .search-section .search-top { padding-top: var(--s1); }
+  .search-section .search-tabs {
     grid-template-columns: repeat(4, minmax(0, 1fr));
     width: var(--full);
   }
-  .hero-screen .search-tabs button { padding-inline: var(--s0); }
-  .hero-screen #search-panel { padding-top: var(--s2); }
+  .search-section .search-tabs button { padding-inline: var(--s0); }
+  .search-section #search-panel { padding-top: var(--s2); }
   #alerts-form.glass-medium,
   .alerts-section::before { grid-area: 2 / 1; }
   .enquiry-main {
@@ -691,7 +691,7 @@ terviora-choice[data-searchable] .choice-menu .choice-search:focus-visible {
 
 @media (prefers-reduced-motion: reduce) {
   .nav-glass, .nav-glass::before, .sticky-nav .mobile-nav, .nav-glass .desktop-nav a, .nav-glass .login-action,
-  .hero-screen .search-tabs::before, .hero-screen .search-tabs button, .post-button.glass-light,
+  .search-section .search-tabs::before, .search-section .search-tabs button, .post-button.glass-light,
   form :is(.glass-input, .choice-trigger),
   .property-view, .property-photo-action img { transition: none; }
   .property-image:hover .property-photo-action img,

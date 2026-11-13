@@ -1,52 +1,105 @@
-const {chromium}=require(process.env.PLAYWRIGHT_MODULE||'playwright');
-const assert=require('node:assert/strict');
-(async()=>{
-const browser=await chromium.launch({headless:true,executablePath:process.env.BROWSER_PATH});
-try{
-const page=await browser.newPage({deviceScaleFactor:1});
-await page.emulateMedia({reducedMotion:'reduce'});
-await page.goto('http://127.0.0.1:4173',{waitUntil:'networkidle'});
-for(const [width,height,name] of [[1440,1000,'desktop'],[1900,960,'wide'],[1366,768,'laptop'],[390,844,'mobile'],[375,667,'short-mobile'],[320,812,'narrow'],[768,1024,'tablet']]){
-await page.setViewportSize({width,height});
-await page.evaluate(async()=>{await document.fonts.ready;const poster=new Image();poster.src=document.querySelector('#hero-video').poster;await poster.decode();window.scrollTo(0,0)});
-const boxes=await page.evaluate(()=>Object.fromEntries(['.hero-screen','.hero','.hero-heading','.hero-media','.search-shell','.search-submit'].map(s=>{const r=document.querySelector(s).getBoundingClientRect();return [s,{x:r.x,y:r.y,width:r.width,height:r.height,bottom:r.bottom}]})));
-if(width<768){
-assert(boxes['.hero'].height<height*.8,`${name} compact hero`);
-assert(boxes['.search-shell'].y>boxes['.hero'].bottom,`${name} search outside hero`);
-}else{
-assert(Math.abs(boxes['.hero-screen'].height-height)<1,`${name} screen height`);
-assert(Math.abs(boxes['.hero'].height-height)<1,`${name} hero itself fills screen`);
-assert(Math.abs(boxes['.hero-media'].height-height)<1,`${name} video fills hero`);
-assert(boxes['.search-shell'].bottom<=height,`${name} search fits`);
-assert(boxes['.search-shell'].bottom<=boxes['.hero-media'].bottom,`${name} search completely overlays video`);
-assert(boxes['.search-shell'].y<boxes['.hero'].bottom,`${name} overlap`);
+const { chromium } = require(process.env.PLAYWRIGHT_MODULE || 'playwright');
+const assert = require('node:assert/strict');
+
+const baseUrl = process.env.BASE_URL || 'http://127.0.0.1:4173';
+const viewports = [
+  [1440, 900, 'desktop'], [1900, 960, 'wide'], [1366, 768, 'laptop'],
+  [390, 844, 'mobile'], [375, 667, 'short-mobile'], [320, 812, 'narrow'], [768, 1024, 'tablet']
+];
+
+function geometry(page) {
+  return page.evaluate(() => Object.fromEntries(
+    ['.hero-screen', '.hero', '.hero-heading', '.hero-media', '#search', '#featured'].map(selector => {
+      const { y, width, height, bottom } = document.querySelector(selector).getBoundingClientRect();
+      return [selector, { y, width, height, bottom }];
+    })
+  ));
 }
-assert(boxes['.search-shell'].y>boxes['.hero-heading'].bottom,`${name} search clears heading`);
-assert(await page.locator('.site-header .brand-logo img').evaluate(el=>el.complete&&el.naturalWidth>0),'Restored logo loads');
-assert(await page.locator('.hero-aside p').isVisible(),`${name} supporting text remains visible`);
-assert(await page.locator('.hero-cta').isVisible(),`${name} hero action remains visible`);
-assert(await page.locator('.hero-cta').evaluate(el=>{const s=getComputedStyle(el);return s.backgroundColor!==s.color&&el.getBoundingClientRect().height>=44;}),'Hero action has a contrasting background and usable target');
-assert.equal(boxes['.hero-media'].width,width,`${name} full bleed`);
-assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),`${name} overflow`);
-await page.screenshot({path:`qa/screenshots/${name}-hero.png`});
-console.log(name,JSON.stringify(boxes));
+
+async function checkComposition(browser) {
+  const page = await browser.newPage({ deviceScaleFactor: 1, reducedMotion: 'reduce' });
+  await page.goto(baseUrl);
+  await page.evaluate(() => document.fonts.ready);
+  for (const [width, height, name] of viewports) {
+    await page.setViewportSize({ width, height });
+    const boxes = await geometry(page);
+    const hero = boxes['.hero'];
+    assert.equal(boxes['.hero-media'].width, width, `${name} full-bleed footage`);
+    assert.equal(boxes['.hero-media'].height, hero.height, `${name} footage fills hero`);
+    assert(boxes['#search'].y > boxes['.hero-screen'].bottom, `${name} search below the entire hero`);
+    assert.equal(boxes['.hero-screen'].height, hero.height, `${name} reduced motion removes pinning`);
+    assert(width < 768 ? hero.height < height * .81 : Math.abs(hero.height - height) < 1, `${name} hero height`);
+    assert(boxes['.hero-heading'].bottom <= hero.bottom + 1, `${name} copy fits in the hero`);
+    assert(await page.locator('.site-header .brand-logo img').evaluate(img => img.complete && img.naturalWidth > 0));
+    assert(await page.locator('.hero-description').isVisible(), `${name} supporting copy is visible`);
+    assert(await page.locator('.hero-cta').evaluate(el => {
+      const style = getComputedStyle(el);
+      return style.backgroundColor !== style.color && el.getBoundingClientRect().height >= 44;
+    }), `${name} hero action has a contrasting background and a usable target`);
+    assert.equal(await page.locator('#hero-video').getAttribute('src'), null, `${name} reduced motion avoids downloading video`);
+    assert(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), `${name} no horizontal overflow`);
+  }
+  await page.close();
 }
-for(const viewport of [{width:1440,height:1000},{width:390,height:844}]){
-await page.setViewportSize(viewport);
-await page.goto('http://127.0.0.1:4173',{waitUntil:'networkidle'});
-await page.locator('.hero-cta').click();
-assert.equal(new URL(page.url()).hash,'#search');
-await page.locator('#tab-rent').click();
-const heroHeight=await page.locator('.hero').evaluate(el=>el.getBoundingClientRect().height);
-if(viewport.width>=768)assert.equal(await page.locator('.hero-screen').evaluate(el=>Math.round(el.getBoundingClientRect().height)),viewport.height,'Changing tabs retains one-screen desktop layout');
-await page.locator('#filter-toggle').click();
-assert(await page.locator('#extra-filters').isVisible(),'Advanced filters open');
-assert(await page.evaluate(()=>document.querySelector('.search-shell').getBoundingClientRect().bottom<=document.querySelector('#featured').getBoundingClientRect().top),'Expanded filters do not cover listings');
-await page.locator('#filter-toggle').click();
-assert.equal(await page.locator('.hero').evaluate(el=>el.getBoundingClientRect().height),heroHeight,'Filter toggles preserve hero height');
-if(viewport.width<768)assert(await page.evaluate(()=>document.querySelector('.search-shell').getBoundingClientRect().top>document.querySelector('.hero').getBoundingClientRect().bottom),'Mobile search stays outside hero');
-else assert.equal(await page.locator('.hero-screen').evaluate(el=>Math.round(el.getBoundingClientRect().height)),viewport.height,'Closing filters restores one-screen desktop layout');
+
+async function checkScrubbing(browser, viewport, name) {
+  const page = await browser.newPage({ viewport, reducedMotion: 'no-preference' });
+  await page.goto(baseUrl, { waitUntil: 'domcontentloaded' });
+  await page.locator('.motion-arrival-home .motion-arrival-brand img').waitFor({ state: 'visible' });
+  await page.locator('.motion-arrival-home').waitFor({ state: 'detached' });
+  await page.locator('#hero-video.has-frame').waitFor();
+  await page.evaluate(() => document.fonts.ready);
+
+  const boxes = await geometry(page);
+  const travel = name === 'mobile' ? boxes['.hero'].height * .75 :
+    boxes['.hero-screen'].height - boxes['.hero'].height;
+  assert(travel > 0, `${name} camera has scroll travel`);
+  assert(boxes['#search'].y > boxes['.hero-screen'].bottom, `${name} search follows the pinned sequence`);
+  assert.match(await page.locator('#hero-video').getAttribute('src'),
+    name === 'mobile' ? /-mobile\.mp4$/ : /-scroll\.mp4$/);
+
+  async function seek(progress) {
+    await page.evaluate(top => window.scrollTo({ top, behavior: 'instant' }), travel * progress);
+    await page.waitForFunction(progress => {
+      const video = document.querySelector('#hero-video');
+      return video.paused && !video.seeking && Math.abs(video.currentTime / video.duration - progress) < .025;
+    }, progress);
+  }
+
+  await seek(.8);
+  const heroTop = (await geometry(page))['.hero'].y;
+  assert(name === 'mobile' ? heroTop < 0 : Math.abs(heroTop) < 1, `${name} scroll treatment`);
+  assert.equal(await page.locator('.hero-heading').evaluate(el => getComputedStyle(el).opacity), '0');
+  await seek(.15);
+  const opacity = Number(await page.locator('.hero-heading').evaluate(el => getComputedStyle(el).opacity));
+  assert(opacity > 0 && opacity < 1, `${name} copy reappears on reverse scroll`);
+  await seek(0);
+  await page.waitForFunction(() => !document.querySelector('.hero').classList.contains('hero-copy-faded'));
+  await page.locator('.hero-cta').click();
+  await page.waitForURL('**/#search');
+  await page.waitForFunction(() => {
+    const search = document.querySelector('#search').getBoundingClientRect();
+    return search.top >= 0 && search.top < innerHeight / 3;
+  });
+  assert.equal(await page.evaluate(() => document.activeElement.id), 'search', `${name} search receives focus`);
+  await page.locator('#tab-rent').click();
+  assert.equal(await page.locator('#tab-rent').getAttribute('aria-selected'), 'true');
+  await page.locator('#filter-toggle').click();
+  assert(await page.locator('#extra-filters').isVisible());
+  const expanded = await geometry(page);
+  assert(expanded['#search'].bottom <= expanded['#featured'].y, `${name} filters do not cover listings`);
+  assert.equal(expanded['.hero-screen'].height, boxes['.hero-screen'].height, `${name} filters preserve hero geometry`);
+  await page.close();
 }
-console.log('Hero link, tab switching, and advanced-filter layout passed.');
-}finally{await browser.close()}
-})().catch(e=>{console.error(e);process.exitCode=1});
+
+(async () => {
+  const browser = await chromium.launch({ headless: true, executablePath: process.env.BROWSER_PATH });
+  try {
+    await checkComposition(browser);
+    await checkScrubbing(browser, { width: 1440, height: 900 }, 'desktop');
+    await checkScrubbing(browser, { width: 390, height: 844 }, 'mobile');
+    console.log('Hero composition passed at seven viewport sizes. Logo intro, forward and reverse scrubbing, and search interactions passed on desktop and mobile.');
+  } finally {
+    await browser.close();
+  }
+})().catch(error => { console.error(error); process.exitCode = 1; });

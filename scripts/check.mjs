@@ -15,7 +15,7 @@ for (const file of ['index.html', 'listings.html', 'property.html', 'sell.html',
   pages.set(file, {html, ids});
 }
 for (const [file, {html}] of pages) {
-  for (const match of html.matchAll(/(?:src|href|poster)="([^"]+)"/g)) {
+  for (const match of html.matchAll(/(?:src|data-mobile-src|href|poster)="([^"]+)"/g)) {
     const target = match[1].replaceAll('&amp;', '&');
     if (/^(https?:|mailto:)/.test(target)) continue;
     const [path, anchor] = target.split('#', 2);

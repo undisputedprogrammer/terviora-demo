@@ -23,7 +23,7 @@ The screenshots guide composition and proportions. Text length, Terviora brandin
 
 ## Architecture and photography
 
-Use the current `assets/images/modern-*.webp` set for listing imagery. The hero uses the supplied `assets/videos/hero-section-video.mp4` with a poster frame from the clip. Prompts and provenance are in `assets/images/HERO-FULLSCREEN-PROMPTS.md`. The built-in image-generation tool produced these concepts:
+Use the current `assets/images/modern-*.webp` set for listing imagery. The current hero uses the requested Luxespace footage, documented in the README. The earlier Kerala concept assets remain available. Prompts and provenance are in `assets/images/HERO-FULLSCREEN-PROMPTS.md`. The built-in image-generation tool produced these concepts:
 
 - `modern-hero`: charcoal cantilevered villa, panoramic glazing, slim bronze fascia, and clean sky for the headline.
 - `hero-landscape-v2` and `hero-portrait-v2`: coordinated modern villa compositions with pale sky for copy and continuous foreground behind search. The older panorama remains archived and is no longer used in the page.
@@ -62,7 +62,7 @@ Login, posting, visits, and alerts are not connected to a backend. Their actions
 
 ## Responsive and review requirements
 
-At widths of 768 px and above, the hero section and its photograph each occupy exactly 100svh. Search shares the same grid cell, aligned to the bottom with a 24 px desktop or 16 px phone inset. The complete panel overlays the image; no separate background strip is reserved beneath the photo. Photo framing responds to aspect ratio so the villa is prominent and unused sky is reduced. Below 768 px, the hero uses its content height plus a 200–300 px full-width landscape photo. Search sits outside the hero with a 16 px gap and expands in normal flow. Mobile uses two-column fields and a full-width search action. The supporting paragraph remains visible at every phone height. On phones the order is eyebrow, headline, supporting copy, solid action, then photograph. Opening advanced filters or displaying a validation error allows the section to expand naturally. Desktop and tablet keep the default view within one screen. Mobile search follows the compact hero in normal flow.
+The homepage opens with the blue Terviora mark and a traveling line on navy, followed by centered Manrope copy over the Luxespace camera sequence. On desktop and tablet, the full-height hero stays pinned during the opening scroll. On phones, the compact hero advances the camera as it scrolls out of view. The search form follows the hero in normal flow at every width. The hero action links directly to it, and the filters and validation messages expand within the search section. Reduced-motion visitors see the opening still and can move straight to search.
 
 At desktop widths, align the navigation, copy, search, and listings to the shared grid. At mobile widths, use stacked copy, two-column search fields, larger touch targets, single-column featured cards, and a stacked process section.
 
@@ -76,6 +76,6 @@ The hero uses the reference-inspired sans-serif scale, a small tracked eyebrow, 
 
 All nine dropdowns use the same custom choice control, including advanced filters and property alerts. Options open above or below the trigger according to available space. Arrow keys, Home/End, Enter/Space, typeahead, Escape, Tab, and outside dismissal are supported. No HTML select elements remain.
 
-## Hero sky clearance
+## Earlier Kerala hero imagery
 
-Desktop and landscape tablets now use `hero-sky-v3-*`, a modestly zoomed-out view with additional sky and a lower roofline. The landscape focal position is centered at 35% vertically to preserve room behind text on wide screens. Phones retain their separate text/image layout; portrait tablets retain the portrait asset. Prompt and provenance are in `assets/images/HERO-FULLSCREEN-PROMPTS.md`.
+The earlier hero used `hero-sky-v3-*`, a modestly zoomed-out view with additional sky and a lower roofline. The landscape focal position is centered at 35% vertically to preserve room behind text on wide screens. Phones retain their separate text/image layout; portrait tablets retain the portrait asset. Prompt and provenance are in `assets/images/HERO-FULLSCREEN-PROMPTS.md`.

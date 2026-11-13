@@ -19,46 +19,28 @@
 /* Composition measurements drawn from the supplied reference screenshots. */
 :root{--content-ratio:84%;--charcoal:#303332;--tab-background:#ededed;--intro-width:280px;--tab-width:130px;--latest-image-height:180px;--text-process-title:36px;--text-owner-title:42px;--text-compact-title:34px;--plan-width:220px;--owner-photo-height:260px;--owner-back-height:210px;--owner-back-width:66%;--owner-front-width:68%}
 @media(max-width:1099px){:root{--content-ratio:84%;--card-height:210px;--process-height:400px;--category-height:120px;--text-process-title:30px;--text-owner-title:34px;--owner-photo-height:170px;--owner-back-height:145px;--plan-width:160px;--latest-image-height:180px}}
-@media(max-width:767px){:root{--content-ratio:100%;--hero-copy-top:130px;--header-height:88px;--logo-width:84px;--text-hero:clamp(40px,10.8vw,64px);--text-h2:30px;--text-compact-title:28px;--card-height:290px;--process-height:360px;--category-height:150px;--latest-image-height:160px;--plan-width:150px;--owner-photo-height:250px;--owner-back-height:200px;--text-process-title:30px}}
+@media(max-width:767px){:root{--content-ratio:100%;--header-height:88px;--logo-width:84px;--text-hero:clamp(40px,10.8vw,64px);--text-h2:30px;--text-compact-title:28px;--card-height:290px;--process-height:360px;--category-height:150px;--latest-image-height:160px;--plan-width:150px;--owner-photo-height:250px;--owner-back-height:200px;--text-process-title:30px}}
 
 
 :root{--reference-copy:clamp(10px,.95vw,14px);--reference-control:clamp(28px,2.8vw,40px);--reference-gap:clamp(12px,1.4vw,20px);--search-heading-gap:clamp(40px,4.16vw,60px)}
 @media(min-width:768px) and (max-width:1099px){:root{--text-process-title:26px}}
 
-/* The bottom-aligned panorama trims only sky when wider than the hero stage. */
 :root{
-  --hero-stage:max(37vw, clamp(520px,47vw,760px));
-  --hero-copy-top:clamp(108px,9.2vw,136px);
-  --hero-photo-height:50vw;
-  --hero-sky-fade:28%;
-  --hero-copy-width:260px;
-  --hero-muted:#696969;
   --hero-tracking:-.04em;
   --hero-leading:.95;
-  --hero-search-overlap:var(--s14);
   --search-shadow:0 8px 28px rgb(0 0 0 / .10);
   --text-hero:clamp(42px,4.45vw,64px);
   --header-height:88px;
 }
 @media(max-width:767px){
   :root{
-    --hero-copy-top:108px;
-    --hero-sky-fade:20%;
-    --hero-search-overlap:var(--s6);
     --text-hero:clamp(36px,10vw,44px);
   }
 }
 
 
-/* One-screen arrival, including the overlapping search. */
+/* Compact search controls. */
 :root{
-  --hero-screen-height:100svh;
-  --hero-photo-height:100%;
-  --hero-photo-position:center 30%;
-  --hero-sky-fade:18%;
-  --hero-search-overlap:80px;
-  --hero-screen-inset:24px;
-  --hero-copy-top:clamp(108px,12svh,144px);
   --search-radius:8px;
   --search-shadow:0 12px 40px rgb(0 0 0 / .08);
   --search-field-height:64px;
@@ -66,48 +48,29 @@
   --search-tab-width:112px;
   --search-chev-size:6px;
   --search-field-wash:#f7f7f7;
-
 }
 @media(max-width:900px){:root{--search-tab-width:96px}}
 @media(max-width:767px){
   :root{
     --header-height:64px;
-    --hero-copy-top:96px;
-    --hero-search-overlap:32px;
-    --hero-screen-inset:16px;
-    --hero-photo-height:60%;
-    --hero-photo-position:center bottom;
-    --hero-sky-fade:12%;
     --search-field-height:60px;
     --text-hero:clamp(34px,9.6vw,44px);
   }
 }
 @media(max-width:767px) and (max-height:740px){
-  :root{--hero-copy-top:80px;--text-hero:32px;--hero-photo-height:58%;--search-field-height:52px}
+  :root{--text-hero:32px;--search-field-height:52px}
 }
 @media(min-width:768px) and (max-height:800px){
-  :root{--hero-copy-top:96px;--header-height:64px;--text-hero:clamp(38px,4vw,56px);--hero-photo-position:center 12%}
-}
-@media(min-width:1100px) and (min-aspect-ratio:5/3){
-  :root{--hero-wide-zoom:170%;--hero-wide-right:-8%;--hero-wide-bottom:-80px}
+  :root{--header-height:64px;--text-hero:clamp(38px,4vw,56px);}
 }
 
-/* Full-height photograph with search layered over its lower foreground. */
+/* Brand lockup sizes. */
 :root{
-  --hero-photo-height:100%;
-  --hero-photo-position:center bottom;
-  --hero-expanded-overlap:240px;
   --logo-width:112px;
   --footer-logo-width:140px;
 }
 @media(max-width:767px){
-  :root{--logo-width:96px;--hero-expanded-overlap:320px}
-}
-@media(min-width:768px) and (max-width:1099px) and (orientation:portrait){
-  :root{--hero-photo-position:center}
-}
-@media(max-width:767px){
-  :root{--mobile-hero-photo-height:clamp(220px,66vw,360px)}
+  :root{--logo-width:96px;}
 }
 
 /* Editorial typography and accessible bespoke choices. */
@@ -115,11 +78,7 @@
   --text-hero:clamp(58px,5.6vw,82px);
   --hero-leading:.98;
   --hero-tracking:-.025em;
-  --hero-copy-width:310px;
-  --hero-muted:var(--muted);
-  --hero-copy-top:clamp(120px,12svh,144px);
   --hero-eyebrow-tracking:.18em;
-  --hero-button-height:48px;
   --hero-detail-rule:#b5aca0;
   --choice-max-height:252px;
   --choice-min-width:176px;
@@ -134,21 +93,14 @@
   --choice-z:40;
 }
 @media(max-width:767px){
-  :root{--text-hero:clamp(42px,11.3vw,52px);--hero-copy-top:88px;--hero-button-height:44px;--mobile-hero-photo-height:clamp(220px,62vw,340px)}
+  :root{--text-hero:clamp(42px,11.3vw,52px);}
 }
-@media(max-width:767px) and (max-height:740px){:root{--hero-copy-top:80px;--text-hero:42px}}
-@media(max-width:767px){
-  :root{--mobile-hero-photo-height:clamp(200px,56vw,300px)}
-}
+@media(max-width:767px) and (max-height:740px){:root{--text-hero:42px}}
 
 /* Screenshot-matched sans-serif typography, shared by all page text and controls. */
 :root{--hero-tracking:-.04em;--hero-leading:1.04;--text-hero:clamp(48px,5.1vw,74px)}
 @media(max-width:767px){:root{--text-hero:clamp(34px,9.6vw,44px)}}
 
-/* Keep the new sky headroom when a wide screen crops the photograph vertically. */
-@media(min-width:768px) and (orientation:landscape){
-  :root{--hero-photo-position:center 35%}
-}
 
 /* Readability hierarchy for small text, controls, and supporting information. */
 :root{
@@ -229,18 +181,28 @@
   --glass-noise: url("../assets/images/glass-noise.svg");
   --motion-arrival-hold: 1000ms;
   --motion-arrival-open: 560ms;
-  --motion-hero-enter: 1040ms;
   --motion-section-enter: 760ms;
   --motion-section-stagger: 85ms;
   --motion-reticle-edge: rgb(0 23 67 / .7);
   --motion-pointer-scale: .8;
   --motion-overlay-layer: 50;
-  --hero-video-scrim: linear-gradient(180deg, rgb(0 0 0 / .73), rgb(0 0 0 / .62) 35%, rgb(0 0 0 / .32) 73%, rgb(0 0 0 / .42));
-  --hero-video-scrim-mobile: rgb(0 0 0 / .35);
+  --cinema-height: 100svh;
+  --cinema-travel: clamp(1200px, 300svh, 3000px);
+  --cinema-title: clamp(42px, min(7.6vw, 13svh), 136px);
+  --cinema-copy-width: 56ch;
+  --cinema-shade: linear-gradient(180deg, rgb(8 15 29 / .64), rgb(8 15 29 / .56) 48%, rgb(8 15 29 / .62));
+  --cinema-lift: var(--s20);
+  --cinema-intro-hold: 1280ms;
+  --cinema-intro-fade: 420ms;
+  --cinema-search-gap: var(--s10);
 }
 
 @media (max-width: 767px) {
   :root {
+    --cinema-height: 78svh;
+    --cinema-title: clamp(33px, min(10vw, 13svh), 62px);
+    --cinema-lift: var(--s8);
+    --cinema-search-gap: var(--s4);
     --glass-blur-light: 10px;
     --glass-blur-medium: 12px;
     --glass-blur-dark: 10px;

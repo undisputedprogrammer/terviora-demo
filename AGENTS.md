@@ -64,8 +64,11 @@ optional browser QA with Playwright. See `README.md` for setup and limitations.
 - Latest user direction takes precedence over the original design proposal:
   closely reproduce the supplied reference screenshots' composition, scale,
   compact controls, equal three-column listing cards, process split, and white
-  owner CTA. Restore the supplied blue Terviora Estates logo; keep the UI restrained.
-  On desktop and tablet, let the hero and photo fill 100svh with search layered over the bottom. Below 768 px, use a shorter hero and place search in normal flow below it. Retain the blue logo and coordinated Kerala imagery.
+  owner CTA. Restore the supplied blue Terviora Estates logo and keep the UI restrained.
+  The approved Luxespace-inspired homepage hero uses the supplied Terviora branding
+  and the requested Dubai reference footage as an exception to the Kerala imagery
+  direction. Use a full-height desktop and tablet stage and a shorter phone stage.
+  Place search in normal flow below the hero at every viewport width.
 - Architecture must be distinctly modern: flat roofs, cantilevers, concrete,
   glass, and restrained tropical landscaping. Avoid tiled/sloping roofs,
   traditional verandas, rustic laterite, cane furniture, or heritage styling.

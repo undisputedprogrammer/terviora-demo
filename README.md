@@ -27,7 +27,7 @@ The site also works on ordinary static hosting. Deploy `index.html`, `listings.h
 - The supplied Terviora Estates mark and name are traced in `assets/brand/terviora-estates-lockup.svg`. The website palette comes from the same artwork.
 - Design tokens, keyboard focus, accessible native dialogs, reduced-motion handling, and responsive layouts down to 320 px.
 - Shared motion for page entrances, scroll reveals, listings updates, disclosures, and decoded gallery images. Same-origin page crossfades run where browser support is available. Reduced-motion preferences skip the animations.
-- A branded opening sequence plays on direct visits and reloads. The hero reveals its title and video in stages. On devices with a mouse, the animated cursor ring appears outside the hero and its search panel.
+- A branded opening sequence plays on direct visits and reloads. The homepage crossfades from the Terviora logo into a scroll-controlled architectural shot with staged text. On devices with a mouse, the animated cursor ring appears outside the hero and the search panel.
 
 ## Honest frontend boundaries
 
@@ -72,17 +72,18 @@ The chosen fonts are already included. `node scripts/download-fonts.mjs` refresh
 
 Seven modern concepts were generated with the built-in image tool, then optimized into 640, 1280, and 1536 px WebP versions. Prompts explicitly require believable Kerala architecture, coconut palms, tropical gardens, flat roofs, cantilevers, concrete, glazing, and coordinated neutral daylight. The originals are retained in the user's generated-images directory; all website dependencies are copied into this project.
 
-The current revision follows the supplied screenshots closely: full-screen modern villa hero with search over its lower foreground, equal three-column white listing cards, narrow process text panel with a large image, and a white owner banner. Seven new modern architectural concepts replace the initial traditional-looking imagery.
+The homepage opens on a full-bleed architectural scene with centered Manrope copy. On desktop and tablet, the scene stays in view while scroll position controls the camera, then releases into a separate property search section. On phones, the camera advances as the shorter hero scrolls out of view, using a smaller video file. Explore properties jumps to the existing search form, where filters and validation messages expand in normal flow.
 
+The requested footage is the Dubai skyline and residence from the [Luxespace Properties homepage](https://www.luxespaceproperties.com/). The reference draws 237 WebP frames to a canvas. Terviora serves the same ordered frames locally as `assets/videos/luxespace-hero-scroll.mp4` and `assets/videos/luxespace-hero-scroll-mobile.mp4`, encoded at 30 fps with a keyframe every five frames for seeking. The first source frame is the poster. Reduced-motion and media-error fallbacks show the poster and skip the pinned scroll sequence. The footage is illustrative and is separate from the Kerala sample inventory.
 
-On desktop and tablet, the hero and its video fill `100svh` with search layered over the bottom. Below 768 px, a compact hero is followed by a separate search panel with a 16 px gap. The supplied MP4 plays muted and loops under a black overlay. Reduced-motion mode shows a still frame from the video. Advanced filters and validation errors expand naturally. To capture and verify the opening composition at seven desktop/mobile sizes with the same Playwright environment settings, run `node scripts/check-hero.cjs` while the local preview is running.
+Run `node scripts/check-hero.cjs` with the local preview running and the Playwright settings above to verify the responsive composition, scroll-controlled playback, reduced-motion fallback, and search interactions.
 
 Custom dropdown checks run with `node scripts/check-choices.cjs` using the same Playwright settings. They cover keyboard selection/dismissal, pointer selection, viewport placement, form reset, dynamic property types, area synchronization, required alert choices, and unique runtime IDs. `scripts/check-hero.cjs` also verifies visible supporting copy and a contrasting usable hero action across seven viewport sizes.
 
 ### Glass surfaces
 
 - `glass-light` styles the Post property button, listing controls, and category captions. The navbar spans the top at rest and becomes a floating, translucent navy bar with backdrop blur after 40 px of scroll.
-- `glass-medium` styles search, the mobile menu, dialogs, dropdowns, and selected content panels. Search uses a light frost and transparent fields so the photo shows through. Dialogs and dropdowns use stronger blur.
+- `glass-medium` styles search, the mobile menu, dialogs, dropdowns, and selected content panels. Search uses light glass controls on its own surface beneath the hero. Dialogs and dropdowns use stronger blur.
 - `glass-dark` is available for dark overlays where white text needs contrast. Listing prices sit on the right, opposite the property name.
 
 The utilities live in `styles/glass.css` and their tokens in `styles/tokens.css`. Listing chips use tinted surfaces in the scrolling grids. Live blur on listing cards is limited to the hovered View details control.

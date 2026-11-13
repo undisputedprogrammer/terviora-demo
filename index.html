@@ -19,7 +19,7 @@
   <script src="scripts/glass.js" defer></script>
   <script src="scripts/motion.js" defer></script>
 </head>
-<body>
+<body class="home-page">
   <script src="scripts/arrival.js"></script>
   <a class="skip-link" href="#main">Skip to content</a>
   <div class="sticky-nav">
@@ -36,22 +36,25 @@
   </div>
   <main id="main">
     <div class="hero-screen">
-    <section class="hero" aria-labelledby="hero-title">
-      <div class="container hero-heading">
-        <div><p class="hero-eyebrow">DISTINCTIVE HOMES. ROOTED IN KERALA.</p><h1 id="hero-title"><span class="hero-line"><span>Homes for what</span></span><br><span class="hero-line"><span>comes next.</span></span></h1><a class="button button-primary hero-cta" href="#search">Explore properties</a></div>
-        <div class="hero-aside"><p>Find homes, workspaces and land across Kerala, with the details that help you decide.</p></div>
-      </div>
-      <div class="hero-media" aria-hidden="true">
-        <div class="hero-video-layer">
-          <video id="hero-video" muted loop playsinline preload="none" poster="assets/videos/hero-section-poster.webp" src="assets/videos/hero-section-video.mp4"></video>
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="hero-media" aria-hidden="true">
+          <img src="assets/videos/luxespace-hero-poster.webp" width="1928" height="1072" alt="" fetchpriority="high">
+          <video id="hero-video" muted playsinline preload="none"
+            data-src="assets/videos/luxespace-hero-scroll.mp4"
+            data-mobile-src="assets/videos/luxespace-hero-scroll-mobile.mp4"></video>
         </div>
-      </div>
-
-    </section>
+        <div class="container hero-heading">
+          <p class="hero-eyebrow">DISTINCTIVE HOMES. ROOTED IN KERALA.</p>
+          <h1 id="hero-title"><span class="hero-line"><span>Homes for what</span></span><br><span class="hero-line"><span>comes next.</span></span></h1>
+          <p class="hero-description">Find homes, workspaces and land across Kerala, with the details that help you decide.</p>
+          <a class="button button-primary hero-cta" href="#search">Explore properties <span aria-hidden="true">↓</span></a>
+        </div>
+      </section>
+    </div>
 
     <section class="search-section container" aria-labelledby="search-title">
       <h2 id="search-title" class="sr-only">Search Kerala properties</h2>
-      <div id="search" class="search-shell glass-medium">
+      <div id="search" class="search-shell glass-medium" tabindex="-1">
         <div class="search-top"><div class="search-tabs" role="tablist" aria-label="What are you looking for?"><button id="tab-buy" role="tab" aria-selected="true" aria-controls="search-panel" data-tab="buy">Buy</button><button id="tab-rent" role="tab" aria-selected="false" aria-controls="search-panel" tabindex="-1" data-tab="rent">Rent</button><button id="tab-commercial" role="tab" aria-selected="false" aria-controls="search-panel" tabindex="-1" data-tab="commercial">Commercial</button><button id="tab-land" role="tab" aria-selected="false" aria-controls="search-panel" tabindex="-1" data-tab="land">Land</button></div><span class="search-note">A little closer to your kind of place.</span></div>
         <div id="search-panel" role="tabpanel" aria-labelledby="tab-buy">
           <form id="property-search">
@@ -67,10 +70,7 @@
           </form>
         </div>
       </div>
-</section>
-    </div>
-
-
+    </section>
 
     <section id="featured" class="section section-tinted" aria-labelledby="featured-title"><div class="container"><div class="section-heading"><div><h2 id="featured-title">New properties</h2></div><div class="section-heading-end"><a class="text-link" id="view-all" href="listings.html">Explore all properties <span aria-hidden="true">↗</span></a></div></div><div id="featured-grid" class="property-grid featured-grid"></div><div class="collection-footer"><p>Good spaces deserve a little more attention.</p><a class="text-link" id="view-saved" href="listings.html?view=saved">Your shortlist <span id="saved-count" data-saved-count>0</span> <span aria-hidden="true">↗</span></a></div></div></section>
     <section id="categories" class="section container" aria-labelledby="categories-title"><div class="section-heading"><div><h2 id="categories-title">Explore by property type</h2></div><p class="section-intro">A city apartment. A garden of your own.<br>Or a blank canvas for something new.</p></div><div id="category-grid" class="category-grid"></div></section>
