@@ -201,6 +201,7 @@
   :root {
     --cinema-height: 78svh;
     --cinema-title: clamp(33px, min(10vw, 13svh), 62px);
+    --cinema-phone-opening-title: clamp(28px, 8.8vw, 58px);
     --cinema-lift: var(--s8);
     --cinema-search-gap: var(--s4);
     --glass-blur-light: 10px;

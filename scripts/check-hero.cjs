@@ -31,7 +31,8 @@ async function checkComposition(browser) {
     assert(width < 768 ? hero.height < height * .81 : Math.abs(hero.height - height) < 1, `${name} hero height`);
     assert(boxes['.hero-heading'].bottom <= hero.bottom + 1, `${name} copy fits in the hero`);
     assert(await page.locator('.site-header .brand-logo img').evaluate(img => img.complete && img.naturalWidth > 0));
-    assert(await page.locator('.hero-description').isVisible(), `${name} supporting copy is visible`);
+    assert(await page.locator('.hero-copy-opening .hero-description').isVisible(), `${name} supporting copy is visible`);
+    assert(!(await page.locator('.hero-copy-followup').isVisible()), `${name} shows the opening message with reduced motion`);
     assert(await page.locator('.hero-cta').evaluate(el => {
       const style = getComputedStyle(el);
       return style.backgroundColor !== style.color && el.getBoundingClientRect().height >= 44;
@@ -66,13 +67,23 @@ async function checkScrubbing(browser, viewport, name) {
     }, progress);
   }
 
-  await seek(.8);
+  const opening = page.locator('.hero-copy-opening');
+  const followup = page.locator('.hero-copy-followup');
+  const opacity = locator => locator.evaluate(el => Number(getComputedStyle(el).opacity));
+  await seek(.55);
   const heroTop = (await geometry(page))['.hero'].y;
   assert(name === 'mobile' ? heroTop < 0 : Math.abs(heroTop) < 1, `${name} scroll treatment`);
-  assert.equal(await page.locator('.hero-heading').evaluate(el => getComputedStyle(el).opacity), '0');
+  assert.equal(await opacity(opening), 0, `${name} opening message fades out`);
+  assert(await followup.isVisible(), `${name} followup is visible`);
+  assert.equal(await opacity(followup), 1, `${name} followup fades in`);
+  assert(await followup.getByRole('heading').evaluate(el => {
+    const { top, bottom } = el.getBoundingClientRect();
+    return top >= 0 && bottom <= innerHeight;
+  }), `${name} followup heading is on screen`);
   await seek(.15);
-  const opacity = Number(await page.locator('.hero-heading').evaluate(el => getComputedStyle(el).opacity));
-  assert(opacity > 0 && opacity < 1, `${name} copy reappears on reverse scroll`);
+  const openingOpacity = await opacity(opening);
+  assert(openingOpacity > 0 && openingOpacity < 1, `${name} opening copy reappears on reverse scroll`);
+  assert(!(await followup.isVisible()), `${name} followup fades out on reverse scroll`);
   await seek(0);
   await page.waitForFunction(() => !document.querySelector('.hero').classList.contains('hero-copy-faded'));
   await page.locator('.hero-cta').click();

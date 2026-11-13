@@ -69,9 +69,12 @@
       const travel = phone.matches ? bounds.height * .75 : bounds.height - hero.offsetHeight;
       if (travel <= 0) return;
       const progress = Math.max(0, Math.min(1, -bounds.top / travel));
-      const copyProgress = Math.min(1, progress / (phone.matches ? .7 : .45));
+      const copyProgress = Math.max(0, Math.min(1, (progress - .08) / .25));
+      const followupProgress = Math.max(0, Math.min(1, (progress - .31) / .19));
       hero.style.setProperty('--cinema-copy-progress', copyProgress);
+      hero.style.setProperty('--cinema-followup-progress', followupProgress);
       hero.classList.toggle('hero-copy-faded', copyProgress === 1);
+      hero.classList.toggle('hero-followup-visible', followupProgress > 0);
 
       if (!Number.isFinite(video.duration) || !video.seekable.length || video.seeking) return;
       const time = Math.min(video.duration - 1 / 30, progress * video.duration);
@@ -85,8 +88,9 @@
     function stop() {
       stage.classList.remove('is-scrubbable');
       video.classList.remove('has-frame');
-      hero.classList.remove('hero-copy-faded');
+      hero.classList.remove('hero-copy-faded', 'hero-followup-visible');
       hero.style.removeProperty('--cinema-copy-progress');
+      hero.style.removeProperty('--cinema-followup-progress');
     }
 
     function syncPreference() {

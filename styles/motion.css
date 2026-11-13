@@ -235,7 +235,7 @@
     animation: terviora-rule var(--motion-section-enter) var(--ease) var(--motion-delay) both;
   }
 
-  .motion-ready :is(.hero-eyebrow, .hero-description, .hero-cta,
+  .motion-ready :is(.hero-copy-opening .hero-description, .hero-cta,
       .catalog-intro, .catalog-results-bar, .catalog-controls:not(.is-open),
       .detail-summary, .detail-gallery, .enquiry-intro, .enquiry-form) {
     animation: terviora-rise var(--motion-section-enter) var(--ease)
@@ -254,11 +254,18 @@
       calc(var(--motion-opening-delay, 0ms) + var(--motion-step) * var(--stagger)) backwards;
   }
 
-  .is-scrubbable .hero-heading:not(:focus-within) {
+  .is-scrubbable .hero-copy-opening:not(:focus-within) {
     opacity: calc(1 - var(--cinema-copy-progress, 0));
     translate: 0 calc(-1 * var(--cinema-lift) * var(--cinema-copy-progress, 0));
   }
   .hero-copy-faded .hero-cta:not(:focus) { pointer-events: none; }
+
+  .hero-followup-visible .hero-copy-followup {
+    visibility: visible;
+    opacity: var(--cinema-followup-progress, 0);
+    translate: 0 calc(var(--cinema-lift) * (1 - var(--cinema-followup-progress, 0)));
+  }
+  .hero-heading:focus-within .hero-copy-followup { visibility: hidden; }
 
   .motion-photo-out { animation: terviora-fade-out var(--reveal) var(--ease-state) both; }
 
